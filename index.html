@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="stylesheet" href="styles.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
@@ -104,7 +104,10 @@
   </div>
 
   <div class="announce-bar">
-    <p>&#x1F69A; &nbsp;<span>Frete Gr&aacute;tis</span>&nbsp; para Todo Brasil em Todos os Produtos</p>
+    <div class="announce-track">
+      <span>&#x1F69A;&nbsp; <strong>Frete Gr&aacute;tis</strong> para Todo Brasil &nbsp;&#x25C6;&nbsp; Espelhos Premium sob medida &nbsp;&#x25C6;&nbsp; Garantia de 12 meses &nbsp;&#x25C6;&nbsp; Parcele em at&eacute; 12x sem juros &nbsp;&#x25C6;&nbsp; +500 clientes satisfeitos &nbsp;&#x25C6;&nbsp;</span>
+      <span aria-hidden="true">&#x1F69A;&nbsp; <strong>Frete Gr&aacute;tis</strong> para Todo Brasil &nbsp;&#x25C6;&nbsp; Espelhos Premium sob medida &nbsp;&#x25C6;&nbsp; Garantia de 12 meses &nbsp;&#x25C6;&nbsp; Parcele em at&eacute; 12x sem juros &nbsp;&#x25C6;&nbsp; +500 clientes satisfeitos &nbsp;&#x25C6;&nbsp;</span>
+    </div>
   </div>
 
   <!-- NAVBAR -->
@@ -243,54 +246,81 @@
   </section>
 
 
+
+  <!-- SEPARADOR -->
+  <div class="sec-divider">
+    <div class="sec-divider-line"></div>
+    <div class="sec-divider-diamond">◆</div>
+    <div class="sec-divider-line"></div>
+  </div>
   <!-- COMO FUNCIONA -->
   <section class="sec-como">
-    <div class="container">
-      <div class="sec-header centered">
-        <span class="sec-eyebrow">Simples e R&aacute;pido</span>
-        <h2 class="sec-title">Como <em>funciona</em></h2>
-        <p class="sec-sub">Comprar na La Mirror &eacute; simples. Do pedido &agrave; entrega, cuidamos de tudo.</p>
+    <div class="como-inner">
+      <div class="como-header">
+        <span class="como-eyebrow">Simples e R&aacute;pido</span>
+        <h2>Como <em>funciona</em></h2>
+        <p>Comprar na La Mirror &eacute; simples. Do pedido &agrave; entrega, cuidamos de tudo.</p>
       </div>
-      <div class="como-grid">
-        <div class="como-item reveal">
-          <div class="como-num">01</div>
-          <div class="como-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+      <div class="como-steps">
+
+        <div class="como-step reveal">
+          <span class="como-step-num">01</span>
+          <div class="como-step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
           </div>
-          <h4>Fale Conosco</h4>
-          <p>Entre em contato pelo WhatsApp ou formul&aacute;rio. Nossa equipe responde rapidamente.</p>
-        </div>
-        <div class="como-arrow">&#8250;</div>
-        <div class="como-item reveal">
-          <div class="como-num">02</div>
-          <div class="como-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          <div class="como-step-body">
+            <h4>Fale Conosco</h4>
+            <p>Entre em contato pelo WhatsApp ou formul&aacute;rio. Nossa equipe responde rapidamente.</p>
           </div>
-          <h4>Receba o Or&ccedil;amento</h4>
-          <p>Enviamos um or&ccedil;amento personalizado com medidas, modelos e op&ccedil;&otilde;es de acabamento.</p>
+          <div class="como-step-arrow">&#8250;</div>
         </div>
-        <div class="como-arrow">&#8250;</div>
-        <div class="como-item reveal">
-          <div class="como-num">03</div>
-          <div class="como-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+
+        <div class="como-step reveal">
+          <span class="como-step-num">02</span>
+          <div class="como-step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
           </div>
-          <h4>Confirme o Pedido</h4>
-          <p>Aprove o or&ccedil;amento e escolha a forma de pagamento. Produzimos com aten&ccedil;&atilde;o aos detalhes.</p>
-        </div>
-        <div class="como-arrow">&#8250;</div>
-        <div class="como-item reveal">
-          <div class="como-num">04</div>
-          <div class="como-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/></svg>
+          <div class="como-step-body">
+            <h4>Receba o Or&ccedil;amento</h4>
+            <p>Enviamos um or&ccedil;amento personalizado com medidas, modelos e op&ccedil;&otilde;es de acabamento.</p>
           </div>
-          <h4>Receba em Casa</h4>
-          <p>Seu espelho chega com frete gr&aacute;tis, embalado com seguran&ccedil;a para todo o Brasil.</p>
+          <div class="como-step-arrow">&#8250;</div>
         </div>
+
+        <div class="como-step reveal">
+          <span class="como-step-num">03</span>
+          <div class="como-step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="como-step-body">
+            <h4>Confirme o Pedido</h4>
+            <p>Aprove o or&ccedil;amento e escolha a forma de pagamento. Produzimos com aten&ccedil;&atilde;o aos detalhes.</p>
+          </div>
+          <div class="como-step-arrow">&#8250;</div>
+        </div>
+
+        <div class="como-step como-step-last reveal">
+          <span class="como-step-num">04</span>
+          <div class="como-step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/></svg>
+          </div>
+          <div class="como-step-body">
+            <h4>Receba em Casa</h4>
+            <p>Seu espelho chega com frete gr&aacute;tis, embalado com seguran&ccedil;a para todo o Brasil.</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
+
+  <!-- SEPARADOR -->
+  <div class="sec-divider">
+    <div class="sec-divider-line"></div>
+    <div class="sec-divider-diamond">◆</div>
+    <div class="sec-divider-line"></div>
+  </div>
   <!-- DIFERENCIAIS -->
   <section class="sec-diff-new">
     <div class="diff-new-grid">
@@ -347,6 +377,13 @@
   </section>
 
 
+
+  <!-- SEPARADOR -->
+  <div class="sec-divider">
+    <div class="sec-divider-line"></div>
+    <div class="sec-divider-diamond">◆</div>
+    <div class="sec-divider-line"></div>
+  </div>
   <!-- FEEDBACKS -->
   <section class="sec-feedback">
     <div class="container">
@@ -442,6 +479,13 @@
   </section>
 
 
+
+  <!-- SEPARADOR -->
+  <div class="sec-divider">
+    <div class="sec-divider-line"></div>
+    <div class="sec-divider-diamond">◆</div>
+    <div class="sec-divider-line"></div>
+  </div>
   <!-- FAQ -->
   <section class="sec-faq">
     <div class="container">
@@ -485,6 +529,13 @@
     </div>
   </section>
 
+
+  <!-- SEPARADOR -->
+  <div class="sec-divider">
+    <div class="sec-divider-line"></div>
+    <div class="sec-divider-diamond">◆</div>
+    <div class="sec-divider-line"></div>
+  </div>
   <!-- CONTATO -->
   <section id="contato" class="sec sec-contato">
     <div class="container">

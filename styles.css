@@ -26,7 +26,7 @@
 
   /* Tipografia */
   --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans:  'Poppins', sans-serif;
+  --font-sans:  'Montserrat', sans-serif;
 
   /* Espaçamento */
   --section-pad: 7rem;
@@ -61,14 +61,23 @@ img { max-width: 100%; display: block; }
 .announce-bar {
   height: var(--announce-h);
   background: var(--black);
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: center;
+  overflow: hidden; user-select: none; cursor: default;
 }
-.announce-bar p {
-  font-size: 0.72rem; font-weight: 400;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
+.announce-track {
+  display: flex; white-space: nowrap; flex-shrink: 0;
+  animation: lm-marquee 32s linear infinite;
 }
-.announce-bar p span { color: var(--gold); }
+.announce-track span {
+  font-size: 0.68rem; font-weight: 400;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6); flex-shrink: 0;
+}
+.announce-track strong { color: var(--gold); font-weight: 600; }
+@keyframes lm-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
 
 /* ── NAVBAR ─────────────────────────────────── */
 #navbar {
@@ -356,8 +365,9 @@ img { max-width: 100%; display: block; }
 
 /* ── DIFERENCIAIS (novo premium) ────────────── */
 .sec-diff-new {
-  background: var(--black);
-  border-top: 1px solid rgba(255,255,255,0.04);
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 .diff-new-grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
@@ -365,44 +375,46 @@ img { max-width: 100%; display: block; }
 }
 .diff-new-item {
   padding: 3rem 2rem 3rem 2.5rem;
-  border-right: 1px solid var(--border-dark);
+  border-right: 1px solid var(--border);
   transition: background var(--trans);
   position: relative; overflow: hidden;
   display: flex; flex-direction: column; gap: 1.2rem;
 }
 .diff-new-item:last-child { border-right: none; }
-.diff-new-item:hover { background: rgba(255,255,255,0.025); }
+.diff-new-item:hover { background: var(--gold-bg); }
 .diff-new-item::after {
   content: '';
   position: absolute; bottom: 0; left: 2.5rem; right: 2rem;
-  height: 1px;
+  height: 2px;
   background: linear-gradient(90deg, var(--gold), transparent);
   transform: scaleX(0); transform-origin: left;
   transition: transform 0.5s ease;
 }
 .diff-new-item:hover::after { transform: scaleX(1); }
 .diff-new-ico {
-  width: 46px; height: 46px;
-  border: 1px solid rgba(198,169,107,0.25);
-  border-radius: 10px;
+  width: 48px; height: 48px;
+  border: 1px solid rgba(198,169,107,0.3);
+  border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
   color: var(--gold); flex-shrink: 0;
-  transition: border-color var(--trans), background var(--trans);
+  background: var(--gold-bg);
+  transition: border-color var(--trans), background var(--trans), transform var(--trans);
 }
 .diff-new-ico svg { width: 20px; height: 20px; }
 .diff-new-item:hover .diff-new-ico {
   border-color: var(--gold);
-  background: rgba(198,169,107,0.08);
+  background: rgba(198,169,107,0.15);
+  transform: scale(1.08);
 }
-.diff-new-text {}
 .diff-new-text h4 {
-  font-family: var(--font-serif);
-  font-size: 1rem; font-weight: 700;
-  color: var(--white); margin-bottom: 0.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem; font-weight: 700;
+  color: var(--black); margin-bottom: 0.4rem;
+  letter-spacing: 0.02em;
 }
 .diff-new-text p {
   font-size: 0.76rem; line-height: 1.65;
-  color: rgba(255,255,255,0.58); font-weight: 300;
+  color: var(--gray); font-weight: 400;
 }
 
 /* ── ESPELHOS (split section) ───────────────── */
@@ -465,7 +477,18 @@ img { max-width: 100%; display: block; }
 }
 
 /* ── CONTATO ────────────────────────────────── */
-.sec-contato { background: #EDE9E3; }
+.sec-contato { background: #0F0F0F; }
+.sec-contato .sec-header h2 { color: var(--white); }
+.sec-contato .sec-header p  { color: rgba(255,255,255,0.5); }
+.contato-info h3  { color: var(--white); }
+.contato-info > p { color: rgba(255,255,255,0.5); }
+.info-list li     { color: rgba(255,255,255,0.55); }
+.horario-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.horario-box strong { color: rgba(255,255,255,0.8); }
+.horario-box p      { color: rgba(255,255,255,0.45); }
 .contato-wrap {
   display: grid; grid-template-columns: 1.3fr 1fr;
   gap: 5rem; align-items: start;
@@ -830,9 +853,12 @@ img { max-width: 100%; display: block; }
    FEEDBACKS
 ══════════════════════════════════════════ */
 .sec-feedback {
-  background: #F4F1EC;
+  background: #0F0F0F;
   padding: var(--section-pad) 0;
 }
+.sec-feedback .sec-eyebrow { color: var(--gold); }
+.sec-feedback .sec-title { color: var(--white); }
+.sec-feedback .sec-sub { color: rgba(255,255,255,0.45); }
 .feedback-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -840,16 +866,17 @@ img { max-width: 100%; display: block; }
   margin-bottom: 3.5rem;
 }
 .fb-card {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: #1C1C1C;
+  border: 1px solid rgba(255,255,255,0.07);
   border-radius: 12px;
   padding: 2rem;
   display: flex; flex-direction: column; gap: 1.2rem;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 .fb-card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
   transform: translateY(-3px);
+  border-color: rgba(198,169,107,0.2);
 }
 .fb-card-dark {
   background: var(--black);
@@ -873,14 +900,16 @@ img { max-width: 100%; display: block; }
 }
 .fb-text {
   font-size: 0.85rem; line-height: 1.78;
-  color: var(--gray); font-style: italic;
+  color: rgba(255,255,255,0.58); font-style: italic;
   flex: 1;
 }
 .fb-author {
   display: flex; align-items: center; gap: 0.85rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid rgba(255,255,255,0.07);
 }
+.fb-author strong { color: var(--white); }
+.fb-author span { color: rgba(255,255,255,0.38); }
 .fb-card-dark .fb-author,
 .fb-card-gold .fb-author { border-color: rgba(255,255,255,0.08); }
 
@@ -913,12 +942,12 @@ img { max-width: 100%; display: block; }
 .fb-sum-score {
   font-family: var(--font-serif);
   font-size: 3rem; font-weight: 700;
-  color: var(--black); line-height: 1;
+  color: var(--white); line-height: 1;
   margin-bottom: 0.4rem;
 }
 .fb-sum-label {
   font-size: 0.72rem; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--gray);
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
 }
 
 @media (max-width: 900px) {
@@ -1053,13 +1082,17 @@ img { max-width: 100%; display: block; }
 ══════════════════════════════════════════ */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(36px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
+.reveal:nth-child(2) { transition-delay: 0.08s; }
+.reveal:nth-child(3) { transition-delay: 0.16s; }
+.reveal:nth-child(4) { transition-delay: 0.24s; }
 
 /* ══════════════════════════════════════════
    FAQ
@@ -1209,7 +1242,7 @@ img { max-width: 100%; display: block; }
    BENTO REDESIGN
 ══════════════════════════════════════════ */
 .sec-bento {
-  background: #F4F1EC;
+  background: #FFFFFF;
   padding: var(--section-pad) 0;
 }
 .bento-grid {
