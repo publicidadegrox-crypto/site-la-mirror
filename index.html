@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>La Mirror &mdash; Espelhos com LED e Espelhos Decorativos</title>
+  <meta name="description" content="La Mirror: espelhos com LED, bisotados e decorativos de alta qualidade. Frete gr&aacute;tis para todo o Brasil. Sob medida para seu projeto."/>
+  <meta name="keywords" content="espelho com LED, espelho decorativo, espelho bisotado, espelho sob medida, espelho para banheiro, espelho para quarto"/>
+  <meta name="author" content="La Mirror"/>
+  <meta name="robots" content="index, follow"/>
+  <!-- Open Graph -->
+  <meta property="og:title" content="La Mirror &mdash; Toque de Luxo para seu Ambiente"/>
+  <meta property="og:description" content="Espelhos com LED, bisotados e decorativos. Frete gr&aacute;tis para todo o Brasil."/>
+  <meta property="og:image" content="assets/images/hero-bg.jpg"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <!-- WhatsApp / Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="La Mirror &mdash; Espelhos Premium"/>
+  <meta name="twitter:description" content="Espelhos com LED, bisotados e decorativos. Frete gr&aacute;tis."/>
+  <meta name="twitter:image" content="assets/images/hero-bg.jpg"/>
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg"/>
+  <link rel="apple-touch-icon" href="assets/images/logo.jpg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "La Mirror",
+    "description": "Espelhos com LED, bisotados e decorativos de alta qualidade. Frete grátis para todo o Brasil.",
+    "image": "assets/images/logo.jpg",
+    "url": "https://lamirror.com.br",
+    "telephone": "+5511999999999",
+    "priceRange": "$$",
+    "address": { "@type": "PostalAddress", "addressCountry": "BR" },
+    "sameAs": [],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Espelhos La Mirror",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Espelhos com LED" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Espelhos Bisotados" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Espelhos Decorativos" } }
+      ]
+    }
+  }
+  </script>
+  <script>
+    window.addEventListener('load', function() {
+      var l = document.getElementById('siteLoader');
+      if (l) l.classList.add('hidden');
+    });
+    setTimeout(function() {
+      var l = document.getElementById('siteLoader');
+      if (l) l.classList.add('hidden');
+    }, 1500);
+  </script>
+</head>
+<body>
+
+
+  <!-- POPUP OFERTA -->
+  <div class="popup-overlay" id="popupOferta">
+    <div class="popup-box">
+      <button class="popup-close" id="popupClose">&#10005;</button>
+      <div class="popup-badge">Oferta Exclusiva</div>
+      <h3>Desconto especial<br/>para voc&ecirc;!</h3>
+      <p>Solicite seu or&ccedil;amento hoje e ganhe<br/><strong>frete gr&aacute;tis + 10% de desconto</strong></p>
+      <div class="popup-timer">
+        <div class="pt-block"><span id="ptMin">10</span><small>min</small></div>
+        <div class="pt-sep">:</div>
+        <div class="pt-block"><span id="ptSec">00</span><small>seg</small></div>
+      </div>
+      <a href="#contato" class="btn-primary popup-btn" id="popupCta">Quero o Desconto</a>
+      <p class="popup-skip" id="popupSkip">N&atilde;o, obrigado</p>
+    </div>
+  </div>
+
+  <!-- ANNOUNCE BAR -->
+  
+  <!-- CARRINHO DRAWER -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Carrinho</h3>
+      <button class="cart-close" id="cartClose" aria-label="Fechar carrinho">&#10005;</button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <p class="cart-empty">Seu carrinho está vazio.</p>
+    </div>
+  </div>
+
+  <!-- LOADER -->
+  <div class="site-loader" id="siteLoader">
+    <div class="loader-inner">
+      <div class="loader-logo">La <span>Mirror</span></div>
+      <div class="loader-bar"><div class="loader-progress" id="loaderProgress"></div></div>
+    </div>
+  </div>
+
+  <div class="announce-bar">
+    <p>&#x1F69A; &nbsp;<span>Frete Gr&aacute;tis</span>&nbsp; para Todo Brasil em Todos os Produtos</p>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <img src="assets/images/logo.jpg" alt="La Mirror" class="logo-svg"/>
+        <span>LA MIRROR</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li class="has-dropdown">
+          <a href="produtos.html">PRODUTOS <span class="chev">&#8250;</span></a>
+          <div class="dropdown">
+            <a href="produtos.html?cat=led">Espelhos com LED</a>
+            <a href="produtos.html?cat=bisotado">Espelhos Bisotados</a>
+            <a href="produtos.html?cat=decorativo">Espelhos Decorativos</a>
+            <a href="produtos.html?cat=oferta">Ofertas Especiais</a>
+          </div>
+        </li>
+        <li><a href="#espelhos">ESPELHOS</a></li>
+        <li><a href="#ofertas">OFERTAS</a></li>
+      </ul>
+      <div class="nav-icons">
+        <button class="icon-btn" aria-label="Buscar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="icon-btn" aria-label="Conta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <button class="icon-btn cart-btn" id="cartBtn" aria-label="Carrinho">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-badge" id="cartBadge"></span>
+        </button>
+        <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="produtos.html">Produtos</a>
+      <a href="#espelhos">Espelhos</a>
+      <a href="#ofertas">Ofertas</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-img parallax-bg" id="parallaxHero" style="background-image:url('assets/images/hero-bg.jpg')">
+      <div class="hero-grad"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">LA MIRROR</p>
+      <h1 class="hero-title">TOQUE DE LUXO</h1>
+      <div class="hero-line"></div>
+      <p class="hero-sub">PARA SEU AMBIENTE</p>
+      <a href="produtos.html" class="btn-hero">COMPRE AQUI</a>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+  <!-- DESTAQUES BENTO -->
+  <section class="sec-bento">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-eyebrow">Sele&ccedil;&atilde;o Especial</span>
+        <h2 class="sec-title">Nossos <em>Destaques</em></h2>
+      </div>
+      <div class="bento-grid">
+
+        <!-- Card Grande: Mais Vendido -->
+        <div class="bento-card reveal bento-main" style="background-image:url('assets/images/produto-1.jpg')">
+          <div class="bento-overlay"></div>
+          <div class="bento-inner">
+            <div class="bento-stars">
+              <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+            <p class="bento-label">Produto</p>
+            <h3 class="bento-title" data-parallax="0.06">Mais<br/><em>Vendido</em></h3>
+            <a href="produtos.html" class="bento-cta">Ver Produto</a>
+          </div>
+        </div>
+
+        <!-- Coluna direita -->
+        <div class="bento-col">
+
+          <!-- Card Contador -->
+          <div class="bento-card reveal bento-counter" style="background-image:url('assets/images/espelho-destaque.jpg')">
+            <div class="bento-overlay bento-overlay-light"></div>
+            <div class="bento-inner bento-inner-right">
+              <div class="bento-stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+              </div>
+              <div class="bento-num-wrap">
+                <span class="bento-plus">+ de</span>
+                <span class="bento-num" id="counterVendas">0</span>
+                <span class="bento-num-label">Clientes Satisfeitos</span>
+              </div>
+              <a href="produtos.html" class="bento-cta bento-cta-gold">Ver Cole&ccedil;&atilde;o</a>
+            </div>
+          </div>
+
+          <!-- Row de 2 cards pequenos -->
+          <div class="bento-row">
+
+            <div class="bento-card reveal bento-small" style="background-image:url('assets/images/produto-2.jpg')">
+              <div class="bento-overlay"></div>
+              <div class="bento-inner bento-inner-center">
+                <div class="bento-stars bento-stars-sm">
+                  <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                </div>
+                <h4>Espelho<br/><em>Redondo</em><br/>com LED</h4>
+                <a href="produtos.html" class="bento-cta">Ver Produto</a>
+              </div>
+            </div>
+
+            <div class="bento-card reveal bento-small" style="background-image:url('assets/images/produto-3.jpg')">
+              <div class="bento-overlay"></div>
+              <div class="bento-inner bento-inner-center">
+                <div class="bento-stars bento-stars-sm">
+                  <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                </div>
+                <h4><em>90&times;90</em><br/>Lapidado<br/>com LED</h4>
+                <a href="produtos.html" class="bento-cta">Ver Produto</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- COMO FUNCIONA -->
+  <section class="sec-como">
+    <div class="container">
+      <div class="sec-header centered">
+        <span class="sec-eyebrow">Simples e R&aacute;pido</span>
+        <h2 class="sec-title">Como <em>funciona</em></h2>
+        <p class="sec-sub">Comprar na La Mirror &eacute; simples. Do pedido &agrave; entrega, cuidamos de tudo.</p>
+      </div>
+      <div class="como-grid">
+        <div class="como-item reveal">
+          <div class="como-num">01</div>
+          <div class="como-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </div>
+          <h4>Fale Conosco</h4>
+          <p>Entre em contato pelo WhatsApp ou formul&aacute;rio. Nossa equipe responde rapidamente.</p>
+        </div>
+        <div class="como-arrow">&#8250;</div>
+        <div class="como-item reveal">
+          <div class="como-num">02</div>
+          <div class="como-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          </div>
+          <h4>Receba o Or&ccedil;amento</h4>
+          <p>Enviamos um or&ccedil;amento personalizado com medidas, modelos e op&ccedil;&otilde;es de acabamento.</p>
+        </div>
+        <div class="como-arrow">&#8250;</div>
+        <div class="como-item reveal">
+          <div class="como-num">03</div>
+          <div class="como-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <h4>Confirme o Pedido</h4>
+          <p>Aprove o or&ccedil;amento e escolha a forma de pagamento. Produzimos com aten&ccedil;&atilde;o aos detalhes.</p>
+        </div>
+        <div class="como-arrow">&#8250;</div>
+        <div class="como-item reveal">
+          <div class="como-num">04</div>
+          <div class="como-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/></svg>
+          </div>
+          <h4>Receba em Casa</h4>
+          <p>Seu espelho chega com frete gr&aacute;tis, embalado com seguran&ccedil;a para todo o Brasil.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAIS -->
+  <section class="sec-diff-new">
+    <div class="diff-new-grid">
+
+      <div class="diff-new-item reveal">
+        <div class="diff-new-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+        <div class="diff-new-text">
+          <h4>Frete Gr&aacute;tis</h4>
+          <p>Entregamos em todo o Brasil sem custo adicional</p>
+        </div>
+      </div>
+
+      <div class="diff-new-item reveal">
+        <div class="diff-new-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <div class="diff-new-text">
+          <h4>Qualidade Garantida</h4>
+          <p>Vidros e molduras premium com garantia estendida</p>
+        </div>
+      </div>
+
+      <div class="diff-new-item reveal">
+        <div class="diff-new-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/>
+          </svg>
+        </div>
+        <div class="diff-new-text">
+          <h4>Sob Medida</h4>
+          <p>Fabricamos no formato e tamanho exatos que voc&ecirc; precisa</p>
+        </div>
+      </div>
+
+      <div class="diff-new-item reveal">
+        <div class="diff-new-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+          </svg>
+        </div>
+        <div class="diff-new-text">
+          <h4>Atendimento Especializado</h4>
+          <p>Equipe pronta para te ajudar a escolher o espelho ideal</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FEEDBACKS -->
+  <section class="sec-feedback">
+    <div class="container">
+      <div class="sec-header centered">
+        <span class="sec-eyebrow">Depoimentos</span>
+        <h2 class="sec-title">O que nossos <em>clientes</em> dizem</h2>
+        <p class="sec-sub">Mais de 500 ambientes transformados em todo o Brasil</p>
+      </div>
+      <div class="feedback-grid">
+
+        <div class="fb-card reveal">
+          <div class="fb-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="fb-text">&ldquo;Comprei o espelho com LED para meu banheiro e ficou incr&iacute;vel. Qualidade absurda, chegou bem embalado e no prazo. Super recomendo a La Mirror!&rdquo;</p>
+          <div class="fb-author">
+            <div class="fb-avatar" style="background:#C6A96B">AM</div>
+            <div>
+              <strong>Ana M.</strong>
+              <span>S&atilde;o Paulo, SP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="fb-card fb-card-dark reveal">
+          <div class="fb-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="fb-text">&ldquo;Atendimento excelente, me ajudaram a escolher o tamanho ideal para minha sala. O espelho bisotado ficou melhor do que eu imaginava. Valeu cada centavo.&rdquo;</p>
+          <div class="fb-author">
+            <div class="fb-avatar" style="background:#3A3A3A; color:#C6A96B">RS</div>
+            <div>
+              <strong>Ricardo S.</strong>
+              <span>Belo Horizonte, MG</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="fb-card reveal">
+          <div class="fb-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="fb-text">&ldquo;Pedi sob medida para um projeto de decora&ccedil;&atilde;o e ficou perfeito. A equipe foi muito atenciosa e o acabamento &eacute; de altíssimo padrão. Recomendo!&rdquo;</p>
+          <div class="fb-author">
+            <div class="fb-avatar" style="background:#C6A96B">PC</div>
+            <div>
+              <strong>Patricia C.</strong>
+              <span>Rio de Janeiro, RJ</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="fb-card fb-card-gold reveal">
+          <div class="fb-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="fb-text">&ldquo;J&aacute; &eacute; o segundo espelho que compro na La Mirror. O primeiro foi t&atilde;o bom que voltei para comprar para outro c&ocirc;modo. Frete r&aacute;pido e produto impec&aacute;vel.&rdquo;</p>
+          <div class="fb-author">
+            <div class="fb-avatar" style="background:#0F0F0F; color:#C6A96B">ML</div>
+            <div>
+              <strong>Marcos L.</strong>
+              <span>Curitiba, PR</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="fb-card reveal">
+          <div class="fb-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="fb-text">&ldquo;Comprei para o sal&atilde;o de beleza e os clientes adoram. O espelho com LED ilumina perfeitamente e valoriza demais o ambiente. &Oacute;timo custo-benef&iacute;cio!&rdquo;</p>
+          <div class="fb-author">
+            <div class="fb-avatar" style="background:#C6A96B">JF</div>
+            <div>
+              <strong>Juliana F.</strong>
+              <span>Campinas, SP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="fb-card fb-card-dark reveal">
+          <div class="fb-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="fb-text">&ldquo;Processo de compra muito simples, atendimento pelo WhatsApp &aacute;gil e o produto chegou perfeito. O espelho oval decorativo ficou exatamente como eu queria.&rdquo;</p>
+          <div class="fb-author">
+            <div class="fb-avatar" style="background:#3A3A3A; color:#C6A96B">TN</div>
+            <div>
+              <strong>Thiago N.</strong>
+              <span>Porto Alegre, RS</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Rating resumo -->
+      <div class="fb-summary" data-parallax="0.04">
+        <div class="fb-sum-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="fb-sum-score">4.9</p>
+        <p class="fb-sum-label">Avalia&ccedil;&atilde;o m&eacute;dia &middot; +500 clientes satisfeitos</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FAQ -->
+  <section class="sec-faq">
+    <div class="container">
+      <div class="sec-header centered">
+        <span class="sec-eyebrow">D&uacute;vidas Frequentes</span>
+        <h2 class="sec-title">Perguntas <em>frequentes</em></h2>
+      </div>
+      <div class="faq-list" id="faqList">
+
+        <div class="faq-item reveal">
+          <button class="faq-q">Voc&ecirc;s entregam para todo o Brasil? <span class="faq-ico">+</span></button>
+          <div class="faq-a"><p>Sim! Entregamos para todos os estados do Brasil com frete gr&aacute;tis em todos os produtos. O prazo varia conforme a regi&atilde;o.</p></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q">Fazem espelhos sob medida? <span class="faq-ico">+</span></button>
+          <div class="faq-a"><p>Sim, trabalhamos com produ&ccedil;&atilde;o sob medida. Basta nos informar as dimens&otilde;es desejadas e o tipo de acabamento que enviamos um or&ccedil;amento personalizado.</p></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q">Qual o prazo de produ&ccedil;&atilde;o e entrega? <span class="faq-ico">+</span></button>
+          <div class="faq-a"><p>O prazo de produ&ccedil;&atilde;o &eacute; de 5 a 10 dias &uacute;teis. Ap&oacute;s isso, o prazo de entrega depende da sua localiza&ccedil;&atilde;o (geralmente 3 a 7 dias &uacute;teis).</p></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q">Os espelhos com LED precisam de instala&ccedil;&atilde;o especial? <span class="faq-ico">+</span></button>
+          <div class="faq-a"><p>N&atilde;o! Nossos espelhos com LED s&atilde;o f&aacute;ceis de instalar e acompanham instru&ccedil;&otilde;es detalhadas. A maioria utiliza cabo USB ou tomada padr&atilde;o.</p></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q">Quais s&atilde;o as formas de pagamento? <span class="faq-ico">+</span></button>
+          <div class="faq-a"><p>Aceitamos Visa, Mastercard, MercadoPago, PayPal e transfer&ecirc;ncia banc&aacute;ria. Parcelamos em at&eacute; 12x no cart&atilde;o.</p></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q">O produto tem garantia? <span class="faq-ico">+</span></button>
+          <div class="faq-a"><p>Sim! Todos os nossos produtos possuem garantia de 12 meses contra defeitos de fabrica&ccedil;&atilde;o. Em caso de problema, basta entrar em contato conosco.</p></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato" class="sec sec-contato">
+    <div class="container">
+      <div class="sec-header">
+        <h2>Fale Conosco</h2>
+        <p>Solicite um or&ccedil;amento ou tire suas d&uacute;vidas</p>
+      </div>
+      <div class="contato-wrap">
+        <form class="contato-form" id="contatoForm">
+          <div class="form-row">
+            <input type="text" placeholder="Seu nome completo" required/>
+            <input type="tel" placeholder="WhatsApp / Telefone"/>
+          </div>
+          <input type="email" placeholder="Seu e-mail" required/>
+          <select>
+            <option value="" disabled selected>Tipo de interesse</option>
+            <option>Espelhos com LED</option>
+            <option>Espelhos Bisotados</option>
+            <option>Espelhos Decorativos</option>
+            <option>Projeto Sob Medida</option>
+          </select>
+          <textarea placeholder="Descreva seu projeto ou d&uacute;vida..." rows="4"></textarea>
+          <button type="submit" class="btn-dark btn-full">Enviar Mensagem</button>
+          <p class="form-ok" id="formMsg"></p>
+        </form>
+        <div class="contato-info">
+          <h3>Informa&ccedil;&otilde;es</h3>
+          <p>Tire suas d&uacute;vidas ou solicite um or&ccedil;amento personalizado.</p>
+          <ul class="info-list">
+            <li>&#x1F4DE; <span>(11) 99999-9999</span></li>
+            <li>&#x2709;&#xFE0F; <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a3c0cccdd7c2d7cce3cfc2cecad1d1ccd18dc0ccce8dc1d1">[email&#160;protected]</a></span></li>
+            <li>&#x1F4CD; <span>S&atilde;o Paulo, SP</span></li>
+          </ul>
+          <div class="horario-box">
+            <strong>Hor&aacute;rio de Atendimento</strong>
+            <div class="horario-grid">
+              <span class="h-day">Seg &ndash; Sex</span><span class="h-time">08:00&ndash;12:00 / 13:00&ndash;17:00</span>
+              <span class="h-day">S&aacute;bado</span><span class="h-time">08:00&ndash;12:00</span>
+              <span class="h-day">Domingo</span><span class="h-time h-closed">Fechado</span>
+            </div>
+          </div>
+          <a href="https://wa.me/5511999999999" target="_blank" class="btn-wpp">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Chamar no WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-col footer-brand">
+          <div class="footer-logo">
+            <img src="assets/images/logo.jpg" alt="La Mirror" width="32" height="32" style="border-radius:50%;filter:invert(1)"/>
+            <span>LA MIRROR</span>
+          </div>
+          <p>Toque de luxo para seu ambiente com espelhos de alta qualidade.</p>
+          <div class="footer-seals">
+            <div class="seal">&#x1F512; Compra Segura</div>
+            <div class="seal">&#x1F6E1;&#xFE0F; Garantia 12m</div>
+            <div class="seal">&#x1F69A; Frete Gr&aacute;tis</div>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Links R&aacute;pidos</h4>
+          <ul>
+            <li><a href="produtos.html">Todos Produtos</a></li>
+            <li><a href="#espelhos">Espelhos</a></li>
+            <li><a href="#ofertas">Ofertas</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <ul class="footer-contact">
+            <li>&#x1F4DE; (11) 99999-9999</li>
+            <li>&#x2709;&#xFE0F; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="43202c2d3722372c032f222e2a31312c316d202c2e6d2131">[email&#160;protected]</a></li>
+            <li>&#x1F4CD; S&atilde;o Paulo, SP</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Redes Sociais</h4>
+          <div class="social-row">
+            <a href="#" class="soc-btn" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="#" class="soc-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-hr"/>
+      <div class="footer-bottom">
+        <div class="payment-wrap">
+          <span>Formas de pagamento</span>
+          <div class="pay-cards">
+            <div class="pay-card"><span class="visa">VISA</span></div>
+            <div class="pay-card pay-mc"><span class="mc-r"></span><span class="mc-o"></span></div>
+            <div class="pay-card"><span class="mp">mercado<br/>pago</span></div>
+            <div class="pay-card"><span class="pp"><b style="color:#003087">Pay</b><b style="color:#009cde">Pal</b></span></div>
+          </div>
+        </div>
+        <p class="copy">&copy; 2026 La Mirror. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- VOLTAR AO TOPO -->
+  <button class="back-top" id="backTop" aria-label="Voltar ao topo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <!-- WHATSAPP FLUTUANTE -->
+  <a href="https://wa.me/5511999999999" class="wpp-float" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>

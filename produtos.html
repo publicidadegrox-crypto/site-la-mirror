@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produtos &mdash; La Mirror</title>
+  <meta name="description" content="Catálogo completo de espelhos La Mirror: com LED, bisotados, decorativos e ovais. Frete grátis para todo o Brasil."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="produtos.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Catálogo de Espelhos — La Mirror",
+    "description": "Espelhos com LED, bisotados, decorativos e ovais de alta qualidade.",
+    "url": "https://lamirror.com.br/produtos.html",
+    "isPartOf": { "@type": "WebSite", "name": "La Mirror", "url": "https://lamirror.com.br" }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ANNOUNCE BAR -->
+  <div class="announce-bar">
+    <p>&#x1F69A; &#x1F389; Frete Gr&aacute;tis para Todo Brasil em Todos os Produtos!</p>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/logo.jpg" alt="La Mirror" class="logo-svg"/>
+        <span>LA MIRROR</span>
+      </a>
+      <ul class="nav-links">
+        <li class="has-dropdown">
+          <a href="produtos.html">PRODUTOS <span class="chev">&#8250;</span></a>
+          <div class="dropdown">
+            <a href="produtos.html?cat=led">Espelhos com LED</a>
+            <a href="produtos.html?cat=bisotado">Espelhos Bisotados</a>
+            <a href="produtos.html?cat=decorativo">Espelhos Decorativos</a>
+            <a href="produtos.html?cat=oferta">Ofertas Especiais</a>
+          </div>
+        </li>
+        <li><a href="produtos.html?cat=led">ESPELHOS</a></li>
+        <li><a href="produtos.html?cat=oferta">OFERTAS</a></li>
+      </ul>
+      <div class="nav-icons">
+        <button class="icon-btn" aria-label="Buscar" id="searchToggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="icon-btn" aria-label="Conta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <button class="icon-btn cart-btn" aria-label="Carrinho">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        </button>
+        <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <!-- Search Bar -->
+    <div class="search-bar" id="searchBar">
+      <div class="search-inner">
+        <input type="text" id="searchInput" placeholder="Buscar espelhos..."/>
+        <button id="searchClose">&#10005;</button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="produtos.html">Todos os Produtos</a>
+      <a href="produtos.html?cat=led">Espelhos com LED</a>
+      <a href="produtos.html?cat=bisotado">Espelhos Bisotados</a>
+      <a href="produtos.html?cat=decorativo">Espelhos Decorativos</a>
+      <a href="produtos.html?cat=oferta">Ofertas</a>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <div class="container">
+      <a href="index.html">Home</a>
+      <span>&#8250;</span>
+      <span id="breadcrumbCat">Todos os Produtos</span>
+    </div>
+  </div>
+
+  <!-- SHOP HERO -->
+  <div class="shop-hero">
+    <h1>Nossos Espelhos</h1>
+    <p>Encontre o espelho ideal para o seu ambiente</p>
+  </div>
+
+  <!-- SHOP LAYOUT -->
+  <div class="shop-wrap container">
+
+    <!-- SIDEBAR FILTROS -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h3>Filtros</h3>
+        <button class="clear-filters" id="clearFilters">Limpar</button>
+      </div>
+
+      <!-- Categoria -->
+      <div class="filter-group">
+        <h4>Categoria</h4>
+        <label class="filter-check">
+          <input type="checkbox" name="cat" value="todos" checked/> Todos
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="cat" value="led"/> Espelhos com LED
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="cat" value="bisotado"/> Espelhos Bisotados
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="cat" value="decorativo"/> Espelhos Decorativos
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="cat" value="oval"/> Espelhos Ovais
+        </label>
+      </div>
+
+      <!-- Preco -->
+      <div class="filter-group">
+        <h4>Pre&ccedil;o</h4>
+        <label class="filter-check">
+          <input type="checkbox" name="preco" value="0-500"/> At&eacute; R$ 500
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="preco" value="500-1000"/> R$ 500 a R$ 1.000
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="preco" value="1000-2000"/> R$ 1.000 a R$ 2.000
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="preco" value="2000+"/> Acima de R$ 2.000
+        </label>
+      </div>
+
+      <!-- Tamanho -->
+      <div class="filter-group">
+        <h4>Tamanho</h4>
+        <label class="filter-check">
+          <input type="checkbox" name="tam" value="pequeno"/> Pequeno (at&eacute; 60cm)
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="tam" value="medio"/> M&eacute;dio (60&ndash;100cm)
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="tam" value="grande"/> Grande (acima de 100cm)
+        </label>
+      </div>
+
+      <!-- Acabamento -->
+      <div class="filter-group">
+        <h4>Acabamento</h4>
+        <label class="filter-check">
+          <input type="checkbox" name="acab" value="preto"/> Moldura Preta
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="acab" value="prata"/> Moldura Prata
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="acab" value="dourado"/> Moldura Dourada
+        </label>
+        <label class="filter-check">
+          <input type="checkbox" name="acab" value="sem"/> Sem Moldura
+        </label>
+      </div>
+
+      <!-- Botao mobile aplicar -->
+      <button class="btn-dark btn-full apply-btn" id="applyFilters">Aplicar Filtros</button>
+    </aside>
+
+    <!-- AREA PRINCIPAL -->
+    <main class="shop-main">
+
+      <!-- Category Pills -->
+      <div class="cat-pills" id="catPills">
+        <button class="cat-pill active" data-cat="">Todos</button>
+        <button class="cat-pill" data-cat="led">Com LED</button>
+        <button class="cat-pill" data-cat="bisotado">Bisotados</button>
+        <button class="cat-pill" data-cat="decorativo">Decorativos</button>
+        <button class="cat-pill" data-cat="oval">Ovais</button>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="shop-toolbar">
+        <div class="toolbar-left">
+          <button class="filter-toggle" id="filterToggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/></svg>
+            Filtros
+          </button>
+          <span class="result-count" id="resultCount">Carregando...</span>
+        </div>
+        <div class="toolbar-right">
+          <select class="sort-select" id="sortSelect">
+            <option value="relevancia">Relev&acirc;ncia</option>
+            <option value="menor">Menor Pre&ccedil;o</option>
+            <option value="maior">Maior Pre&ccedil;o</option>
+            <option value="novos">Mais Novos</option>
+          </select>
+          <div class="view-toggle">
+            <button class="view-btn active" id="gridView" aria-label="Grade">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </button>
+            <button class="view-btn" id="listView" aria-label="Lista">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><rect x="3" y="4" width="18" height="4"/><rect x="3" y="10" width="18" height="4"/><rect x="3" y="16" width="18" height="4"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tags de filtros ativos -->
+      <div class="active-filters" id="activeFilters"></div>
+
+      <!-- Grid de produtos -->
+      <div class="prod-grid-shop" id="prodGrid"></div>
+
+      <!-- Paginacao -->
+      <div class="pagination" id="pagination"></div>
+
+    </main>
+  </div>
+
+  <!-- MODAL PRODUTO -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">&#10005;</button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- WHATSAPP FLUTUANTE -->
+  <a href="https://wa.me/5511999999999" class="wpp-float" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-col footer-brand">
+          <div class="footer-logo">
+            <img src="assets/images/logo.jpg" alt="La Mirror" width="32" height="32" style="border-radius:50%;filter:invert(1)"/>
+            <span>LA MIRROR</span>
+          </div>
+          <p>Toque de luxo para seu ambiente com espelhos de alta qualidade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Links R&aacute;pidos</h4>
+          <ul>
+            <li><a href="produtos.html">Todos Produtos</a></li>
+            <li><a href="produtos.html?cat=led">Espelhos</a></li>
+            <li><a href="produtos.html?cat=oferta">Ofertas</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <ul class="footer-contact">
+            <li>&#x1F4DE; (11) 99999-9999</li>
+            <li>&#x2709;&#xFE0F; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd9e9293899c8992bd919c90948f8f928fd39e9290d39f8f">[email&#160;protected]</a></li>
+            <li>&#x1F4CD; S&atilde;o Paulo, SP</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Redes Sociais</h4>
+          <div class="social-row">
+            <a href="#" class="soc-btn" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="#" class="soc-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-hr"/>
+      <div class="footer-bottom">
+        <div class="payment-wrap">
+          <span>Formas de pagamento</span>
+          <div class="pay-cards">
+            <div class="pay-card"><span class="visa">VISA</span></div>
+            <div class="pay-card pay-mc"><span class="mc-r"></span><span class="mc-o"></span></div>
+            <div class="pay-card"><span class="mp">mercado<br/>pago</span></div>
+            <div class="pay-card"><span class="pp"><b style="color:#003087">Pay</b><b style="color:#009cde">Pal</b></span></div>
+          </div>
+        </div>
+        <p class="copy">&copy; 2026 La Mirror. Todos os direitos reservados.</p>
+ 
