@@ -257,7 +257,18 @@ fadeEls.forEach(el => {
       cartBody.innerHTML = '<p class="cart-empty">Seu carrinho está vazio.</p>';
     } else {
       cartBody.innerHTML = items.map(function(item) {
-        return '<div class="cart-item"><span class="cart-item-name">' + item.nome + '</span><span class="cart-item-price">' + item.preco + '</span></div>';
+        var img = item.img ? '<img src="' + item.img + '" style="width:54px;height:60px;object-fit:cover;border-radius:6px;flex-shrink:0"/>' : '';
+        var nome = item.nome || 'Produto';
+        var preco = item.preco || '';
+        var qty = item.qty || 1;
+        return '<div class="cart-item" style="display:flex;align-items:center;gap:.8rem;padding:.8rem 0;border-bottom:1px solid #f0f0f0">'
+          + img
+          + '<div style="flex:1;min-width:0">'
+          + '<div style="font-size:.8rem;font-weight:600;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + nome + '</div>'
+          + '<div style="font-size:.72rem;color:#888;margin-top:.2rem">Qtd: ' + qty + '</div>'
+          + '</div>'
+          + '<div style="font-size:.82rem;font-weight:700;color:#C6A96B;white-space:nowrap">' + preco + '</div>'
+          + '</div>';
       }).join('');
     }
   }

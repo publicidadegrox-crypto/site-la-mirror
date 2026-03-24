@@ -855,7 +855,7 @@
     if (idx >= 0) {
       cart[idx].qty = Math.min(99, (cart[idx].qty || 1) + qty);
     } else {
-      cart.push({ id: p.id, qty });
+      cart.push({ id: p.id, qty, nome: p.nome, preco: p.preco, img: p.fotos?.[0] || '' });
     }
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
