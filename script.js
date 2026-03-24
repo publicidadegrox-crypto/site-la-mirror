@@ -250,27 +250,53 @@ fadeEls.forEach(el => {
     try { return JSON.parse(localStorage.getItem('lm_cart') || '[]'); } catch(e) { return []; }
   }
 
+  function fmt(n) {
+    return 'R$ ' + Number(n).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
   function updateDrawer() {
     if (!cartBody) return;
     var items = getCart();
+    var footer  = document.getElementById('cartFooter');
+    var totalEl = document.getElementById('cartTotalValue');
+    var countEl = document.getElementById('cartCount');
+
     if (items.length === 0) {
       cartBody.innerHTML = '<p class="cart-empty">Seu carrinho está vazio.</p>';
-    } else {
-      cartBody.innerHTML = items.map(function(item) {
-        var img = item.img ? '<img src="' + item.img + '" style="width:54px;height:60px;object-fit:cover;border-radius:6px;flex-shrink:0"/>' : '';
-        var nome = item.nome || 'Produto';
-        var preco = item.preco || '';
-        var qty = item.qty || 1;
-        return '<div class="cart-item" style="display:flex;align-items:center;gap:.8rem;padding:.8rem 0;border-bottom:1px solid #f0f0f0">'
-          + img
-          + '<div style="flex:1;min-width:0">'
-          + '<div style="font-size:.8rem;font-weight:600;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + nome + '</div>'
-          + '<div style="font-size:.72rem;color:#888;margin-top:.2rem">Qtd: ' + qty + '</div>'
-          + '</div>'
-          + '<div style="font-size:.82rem;font-weight:700;color:#C6A96B;white-space:nowrap">' + preco + '</div>'
-          + '</div>';
-      }).join('');
+      if (footer) footer.style.display = 'none';
+      if (countEl) countEl.textContent = '';
+      return;
     }
+
+    var total = 0;
+    var totalQty = 0;
+    cartBody.innerHTML = items.map(function(item) {
+      var qty      = item.qty || 1;
+      var preco    = Number(item.preco) || 0;
+      var subtotal = preco * qty;
+      total     += subtotal;
+      totalQty  += qty;
+      var imgHtml = item.img
+        ? '<img class="cart-item-img" src="' + item.img + '" alt="' + (item.nome || '') + '"/>'
+        : '<div class="cart-item-img" style="background:#eee"></div>';
+      var descHtml = item.descricao
+        ? '<div class="cart-item-desc">' + item.descricao + '</div>'
+        : '';
+      return '<div class="cart-item">'
+        + imgHtml
+        + '<div class="cart-item-info">'
+        +   '<div class="cart-item-name">' + (item.nome || 'Produto') + '</div>'
+        +   descHtml
+        +   '<div class="cart-item-unit">Unit.: ' + fmt(preco) + '</div>'
+        +   '<div class="cart-item-qty">Qtd: ' + qty + '</div>'
+        + '</div>'
+        + '<div class="cart-item-subtotal">' + fmt(subtotal) + '</div>'
+        + '</div>';
+    }).join('');
+
+    if (footer) footer.style.display = 'block';
+    if (totalEl) totalEl.textContent = fmt(total);
+    if (countEl) countEl.textContent = '(' + totalQty + ' ' + (totalQty === 1 ? 'item' : 'itens') + ')';
   }
 
   function openCart() {

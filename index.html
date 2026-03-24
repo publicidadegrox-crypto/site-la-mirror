@@ -87,11 +87,18 @@
   <div class="cart-overlay" id="cartOverlay"></div>
   <div class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
-      <h3>Carrinho</h3>
+      <h3>Carrinho <span id="cartCount" style="font-size:.75rem;font-weight:400;color:#888"></span></h3>
       <button class="cart-close" id="cartClose" aria-label="Fechar carrinho">&#10005;</button>
     </div>
     <div class="cart-body" id="cartBody">
       <p class="cart-empty">Seu carrinho está vazio.</p>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-value" id="cartTotalValue">R$ 0,00</span>
+      </div>
+      <a href="carrinho.html" class="cart-btn-checkout">Finalizar Compra →</a>
     </div>
   </div>
 
