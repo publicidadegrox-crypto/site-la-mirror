@@ -7,7 +7,174 @@
    Substitua img por seus arquivos reais
    em assets/images/
 ───────────────────────────────────────── */
-const PRODUTOS = [];
+const PRODUTOS = [
+  {
+    id: 1,
+    nome: 'Espelho Iluminado Chic',
+    desc: 'Espelho com iluminação LED integrada, ideal para banheiros e closets.',
+    cat: 'led',
+    catLabel: 'Com LED',
+    img: 'assets/images/espelho-01.jpg',
+    preco: 899,
+    precoOriginal: null,
+    tam: 'medio',
+    acab: 'preto',
+    badges: ['novo'],
+    specs: {
+      marca: 'La Mirror',
+      forma: '',
+      comLuz: '',
+      tempLuz: '',
+      corMoldura: '',
+      alimentacao: '',
+      altura: '',
+      largura: '',
+      peso: '',
+      diametro: '',
+      espessura: '',
+      estilo: ''
+    }
+  },
+  {
+    id: 2,
+    nome: 'Espelho Bisotado Clássico',
+    desc: 'Bisotê lapidado à mão com acabamento em moldura prata envelhecida.',
+    cat: 'bisotado',
+    catLabel: 'Bisotado',
+    img: 'assets/images/espelho-02.jpg',
+    preco: 649,
+    precoOriginal: null,
+    tam: 'medio',
+    acab: 'prata',
+    badges: ['destaque'],
+    specs: {
+      marca: 'La Mirror',
+      forma: '',
+      comLuz: '',
+      tempLuz: '',
+      corMoldura: '',
+      alimentacao: '',
+      altura: '',
+      largura: '',
+      peso: '',
+      diametro: '',
+      espessura: '',
+      estilo: ''
+    }
+  },
+  {
+    id: 3,
+    nome: 'Espelho Oval Glamour',
+    desc: 'Formato oval com moldura dourada, perfeito para quartos e salas.',
+    cat: 'oval',
+    catLabel: 'Oval',
+    img: 'assets/images/espelho-03.jpg',
+    preco: 749,
+    precoOriginal: 949,
+    tam: 'medio',
+    acab: 'dourado',
+    badges: ['oferta'],
+    specs: {
+      marca: 'La Mirror',
+      forma: '',
+      comLuz: '',
+      tempLuz: '',
+      corMoldura: '',
+      alimentacao: '',
+      altura: '',
+      largura: '',
+      peso: '',
+      diametro: '',
+      espessura: '',
+      estilo: ''
+    }
+  },
+  {
+    id: 4,
+    nome: 'Espelho Roma',
+    desc: 'Espelho Jateado Iluminado com LED Quente e Frio. Acompanha fonte bivolt 110/220V, potência 12W por LED e sistema de fixação. Fácil instalação com apenas 1 parafuso na parede — possui pendurador. Ideal para banheiros, quartos, closets, camarins, barbearias e studios de maquiagem. Os espelhos são embalados com proteção nas bordas para segurança no transporte.',
+    cat: 'led',
+    catLabel: 'Com LED',
+    img: 'assets/images/espelho roma sem fundo.png',
+    fotos: [
+      'assets/images/espelho roma sem fundo.png',
+      'assets/images/espelho-04.jpg'
+    ],
+    preco: 1290,
+    precoOriginal: null,
+    tam: 'grande',
+    acab: 'sem',
+    badges: ['destaque'],
+    specs: {
+      marca: 'La Mirror',
+      forma: 'Jateado',
+      comLuz: 'Sim',
+      tempLuz: 'Frio e Quente',
+      corMoldura: 'Sem moldura',
+      alimentacao: 'Bivolt 110/220V',
+      altura: '170 cm (1700 mm)',
+      largura: '60 cm (600 mm)',
+      peso: '',
+      diametro: '',
+      espessura: '',
+      estilo: 'Moderno — Comercial e Residencial'
+    }
+  },
+  {
+    id: 5,
+    nome: 'Espelho LED Touch Smart',
+    desc: 'Controle de intensidade por toque, luz fria e quente ajustável.',
+    cat: 'led',
+    catLabel: 'Com LED',
+    img: 'assets/images/espelho-05.jpg',
+    preco: 1590,
+    precoOriginal: 1890,
+    tam: 'grande',
+    acab: 'preto',
+    badges: ['oferta', 'novo'],
+    specs: {
+      marca: 'La Mirror',
+      forma: '',
+      comLuz: '',
+      tempLuz: '',
+      corMoldura: '',
+      alimentacao: '',
+      altura: '',
+      largura: '',
+      peso: '',
+      diametro: '',
+      espessura: '',
+      estilo: ''
+    }
+  },
+  {
+    id: 6,
+    nome: 'Espelho Bisotado Dourado',
+    desc: 'Moldura dourada com detalhes bisotados, elegância para sua entrada.',
+    cat: 'bisotado',
+    catLabel: 'Bisotado',
+    img: 'assets/images/espelho-06.jpg',
+    preco: 985,
+    precoOriginal: null,
+    tam: 'grande',
+    acab: 'dourado',
+    badges: ['destaque'],
+    specs: {
+      marca: 'La Mirror',
+      forma: '',
+      comLuz: '',
+      tempLuz: '',
+      corMoldura: '',
+      alimentacao: '',
+      altura: '',
+      largura: '',
+      peso: '',
+      diametro: '',
+      espessura: '',
+      estilo: ''
+    }
+  }
+];
 
 /* ── ESTADO ─────────────────────────── */
 let state = {
@@ -111,32 +278,36 @@ function renderGrid(lista, total) {
     return;
   }
 
-  grid.innerHTML = lista.map(p => `
-    <div class="shop-card" onclick="abrirModal(${p.id})">
+  grid.innerHTML = lista.map(p => {
+    const boleto   = (p.preco * 0.95).toLocaleString('pt-BR', {minimumFractionDigits:2});
+    const parcela  = (p.preco / 12).toLocaleString('pt-BR', {minimumFractionDigits:2});
+    const imgSrc   = (p.fotos && p.fotos[0]) || p.img;
+    return `
+    <div class="shop-card" onclick="window.location.href='produto.html?id=${p.id}'" style="cursor:pointer">
       <div class="shop-card-img">
-        <div class="shop-card-img-inner" style="background-image:url('${p.img}')"></div>
+        <div class="shop-card-img-inner" style="background-image:url('${imgSrc}')"></div>
         <div class="shop-card-badges">
-          ${p.badges.map(b => `<span class="badge ${b}">${b === 'oferta' ? 'Oferta' : b === 'novo' ? 'Novo' : 'Destaque'}</span>`).join('')}
+          ${p.badges.map(b => `<span class="badge ${b}">${b==='oferta'?'Oferta':b==='novo'?'Novo':'Destaque'}</span>`).join('')}
         </div>
-        <button class="shop-card-wish" onclick="toggleWish(event, this)" data-id="${p.id}" title="Favoritar">${getWishlist().includes(p.id) ? '&#9829;' : '&#9825;'}</button>
+        <button class="shop-card-wish" onclick="toggleWish(event, this)" data-id="${p.id}" title="Favoritar">${getWishlist().includes(p.id)?'&#9829;':'&#9825;'}</button>
       </div>
       <div class="shop-card-body">
-        <span class="shop-card-cat">${p.catLabel}</span>
         <h3>${p.nome}</h3>
-        <p>${p.desc}</p>
         <div class="shop-card-footer">
           <div class="price-wrap">
             ${p.precoOriginal ? `<span class="price-de">${fmt(p.precoOriginal)}</span>` : ''}
             <span class="price-por">${fmt(p.preco)}</span>
+            <span class="price-boleto">R$${boleto} com Boleto</span>
+            <span class="price-parcelas">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              12 x de R$${parcela} sem juros
+            </span>
           </div>
-          <button class="btn-card" onclick="pedirWpp(event, ${p.id})">Pedir</button>
-        </div>
-      </div>
-      <button class="shop-card-quick" onclick="abrirModal(${p.id}); event.stopPropagation()">Ver Detalhes</button>
+          <button class="btn-card" onclick="event.stopPropagation(); window.location.href='produto.html?id=${p.id}'">Ver Mais</button>
         </div>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 }
 
 function renderPaginacao(total) {

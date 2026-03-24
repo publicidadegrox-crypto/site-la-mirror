@@ -230,42 +230,46 @@
 
 .shop-card {
   background: var(--white);
-  border: 1px solid #ebebeb;
   border-radius: 12px;
   overflow: hidden;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   cursor: pointer;
   position: relative;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 .shop-card:hover {
-  box-shadow: 0 16px 48px rgba(0,0,0,0.1);
-  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  transform: translateY(-3px);
 }
 
-/* Imagem */
+/* Área da imagem — fundo branco */
 .shop-card-img {
   position: relative;
-  height: 260px;
-  background: #f8f8f8;
+  background: #fff;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4/3;
+  padding: 6px;
 }
 .shop-card-img-inner {
   width: 100%; height: 100%;
-  background: #f0f0f0 center/cover no-repeat;
-  transition: transform 0.6s ease;
+  background: #fff center/cover no-repeat;
+  transition: transform 0.5s ease;
 }
-.shop-card:hover .shop-card-img-inner { transform: scale(1.06); }
+.shop-card:hover .shop-card-img-inner { transform: scale(1.07); }
 
 /* Badges */
 .shop-card-badges {
-  position: absolute; top: 12px; left: 12px;
-  display: flex; flex-direction: column; gap: 5px; z-index: 2;
+  position: absolute; top: 10px; left: 10px;
+  display: flex; flex-direction: column; gap: 4px; z-index: 2;
 }
 .badge {
   font-size: 0.58rem; font-weight: 700;
   letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 0.25rem 0.6rem; border-radius: 4px;
-  color: var(--white); background: var(--black);
+  padding: 0.22rem 0.55rem; border-radius: 4px;
+  color: #fff; background: #1a1a1a;
   width: fit-content; line-height: 1.4;
 }
 .badge.oferta   { background: #e53e3e; }
@@ -274,75 +278,88 @@
 
 /* Wishlist */
 .shop-card-wish {
-  position: absolute; top: 12px; right: 12px;
-  width: 34px; height: 34px; border-radius: 50%;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(4px);
+  position: absolute; top: 10px; right: 10px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.95);
   border: none; cursor: pointer; z-index: 2;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  color: #aaa; font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  color: #bbb; font-size: 1rem;
   transition: all var(--trans);
 }
 .shop-card-wish:hover,
 .shop-card-wish.active { background: #fff0f0; color: #e53e3e; transform: scale(1.1); }
 
-/* Quick view ao hover */
-.shop-card-quick {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  background: rgba(17,17,17,0.85);
-  backdrop-filter: blur(4px);
-  color: white; font-size: 0.7rem; font-weight: 600;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  padding: 0.7rem; text-align: center;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
-  border: none; cursor: pointer; width: 100%;
-}
-.shop-card:hover .shop-card-quick { transform: translateY(0); }
+/* Quick view — escondido, já usamos botão no body */
+.shop-card-quick { display: none; }
 
-/* Body */
-.shop-card-body { padding: 1.1rem 1.2rem 1.3rem; }
-
-.shop-card-cat {
-  font-size: 0.6rem; font-weight: 600;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: #999; margin-bottom: 0.35rem; display: block;
+/* ── BODY ESCURO ── */
+.shop-card-body {
+  background: #1a1a1a;
+  padding: 1rem 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  text-align: center;
 }
+
+.shop-card-cat { display: none; }
+
 .shop-card-body h3 {
   font-family: var(--font-serif);
-  font-size: 1rem; font-weight: 700;
-  color: var(--black); margin-bottom: 0.3rem;
+  font-size: .92rem; font-weight: 700;
+  color: #fff; margin-bottom: 0.7rem;
   line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-.shop-card-body p {
-  font-size: 0.76rem; color: #888;
-  line-height: 1.55; margin-bottom: 1rem;
-}
+.shop-card-body p { display: none; }
+
 .shop-card-footer {
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 0.5rem;
-  border-top: 1px solid #f5f5f5; padding-top: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  border-top: none;
+  padding-top: 0;
 }
-.price-wrap { display: flex; flex-direction: column; gap: 1px; }
+
+.price-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 2px;
+  margin-bottom: 4px; width: 100%;
+}
 .price-de {
-  font-size: 0.68rem; color: #bbb;
+  font-size: 0.68rem; color: #777;
   text-decoration: line-through; line-height: 1;
 }
 .price-por {
-  font-size: 1.05rem; font-weight: 700;
-  color: var(--black); line-height: 1.2;
+  font-size: 1.15rem; font-weight: 700;
+  color: #fff; line-height: 1.2;
 }
+.price-boleto {
+  font-size: 0.72rem; color: #888; margin-bottom: 2px;
+}
+.price-parcelas {
+  font-size: 0.7rem; color: #666;
+  display: flex; align-items: center; gap: 4px;
+  margin-bottom: 12px;
+}
+.price-parcelas svg { flex-shrink: 0; }
+
 .btn-card {
-  font-size: 0.68rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--white); background: var(--black);
-  padding: 0.5rem 1rem; border-radius: 6px;
-  border: none; cursor: pointer;
-  transition: background var(--trans), transform var(--trans);
-  white-space: nowrap;
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: #1a1a1a; background: var(--gold, #c6a96b);
+  padding: 0.65rem 0; border-radius: 6px;
+  border: none; cursor: pointer; width: 100%;
+  transition: background 0.2s, transform 0.15s;
 }
-.btn-card:hover { background: #333; transform: translateY(-1px); }
+.btn-card:hover { background: var(--gold-light, #d9bf8a); transform: translateY(-1px); }
 
 /* ── LIST MODE ────────────────────────────── */
 .prod-grid-shop.list-mode .shop-card {

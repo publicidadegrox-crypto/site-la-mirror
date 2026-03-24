@@ -67,18 +67,6 @@ fadeEls.forEach(el => {
   obs.observe(el);
 });
 
-, { threshold: 0.5 });
-  obs.observe(counterEl);
-}
-
-
-
-
-
-
-
-
-
 
 /* ════════════════════════════════════════
    LA MIRROR — Features JS
@@ -282,4 +270,38 @@ fadeEls.forEach(el => {
   if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
   window.addEventListener('storage', updateBadge);
   updateBadge();
+})();
+
+/* ── PARALLAX ────────────────────────── */
+(function() {
+  var ticking = false;
+
+  function updateParallax() {
+    var scrollY = window.scrollY;
+
+    // Hero background parallax
+    var hero = document.getElementById('parallaxHero');
+    if (hero) {
+      hero.style.transform = 'translateY(' + (scrollY * 0.35) + 'px)';
+    }
+
+    // Seções com data-parallax
+    document.querySelectorAll('[data-parallax]').forEach(function(el) {
+      var speed = parseFloat(el.getAttribute('data-parallax')) || 0.1;
+      var rect  = el.getBoundingClientRect();
+      var center = rect.top + rect.height / 2 - window.innerHeight / 2;
+      el.style.transform = 'translateY(' + (center * speed) + 'px)';
+    });
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateParallax();
 })();

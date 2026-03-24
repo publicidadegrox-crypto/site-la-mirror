@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="pageTitle">Produto — La Mirror</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg"/>
+  <link rel="apple-touch-icon" href="assets/images/logo.jpg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    .produto-page { padding-top: 72px; background: #111; }
+
+    /* ── LAYOUT PRINCIPAL ──────────────────── */
+    .pd-wrap {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      align-items: start;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px 0;
+      gap: 32px;
+    }
+
+    /* ── COLUNA ESQUERDA — galeria ─────────── */
+    .pd-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: sticky;
+      top: 90px;
+    }
+
+    /* Foto principal */
+    .pd-img-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+    }
+    .pd-img-card {
+      background: #1c1c1c;
+      border-radius: 12px;
+      width: 100%;
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Miniaturas abaixo da foto principal */
+    .pd-thumbs {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
+    .pd-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid rgba(255,255,255,.1);
+      flex-shrink: 0;
+      transition: border-color .2s;
+      background: #1c1c1c;
+    }
+    .pd-thumb.active, .pd-thumb:hover { border-color: var(--gold); }
+    .pd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pd-img-card img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 85%;
+      max-height: 85%;
+      object-fit: contain;
+      display: block;
+      cursor: crosshair;
+    }
+    /* Cursor crosshair na imagem */
+    .pd-img-card img { transition: none; cursor: crosshair; }
+
+    /* Indicador de área no hover */
+    .zoom-indicator {
+      position: absolute;
+      border: 1.5px solid var(--gold, #c6a96b);
+      background: rgba(198,169,107,.12);
+      pointer-events: none;
+      display: none;
+      z-index: 5;
+    }
+
+    /* Painel de zoom ao lado */
+    .zoom-panel {
+      position: absolute;
+      left: calc(100% + 16px);
+      top: 0;
+      width: 420px;
+      height: 420px;
+      background: #1c1c1c;
+      border-radius: 12px;
+      border: 1.5px solid rgba(198,169,107,.3);
+      overflow: hidden;
+      display: none;
+      z-index: 100;
+      box-shadow: 0 8px 40px rgba(0,0,0,.5);
+    }
+    .zoom-panel img {
+      position: absolute;
+      pointer-events: none;
+      max-width: none !important;
+      max-height: none !important;
+      width: auto !important;
+      height: auto !important;
+      transform: none !important;
+      top: 0 !important;
+      left: 0 !important;
+    }
+    .pd-badges {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ── COLUNA DIREITA — info ──────────────── */
+    .pd-info {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 32px 28px 40px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: sticky;
+      top: 90px;
+    }
+
+    .pd-breadcrumb {
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .pd-breadcrumb a { color: rgba(255,255,255,.35); text-decoration: none; transition: color .2s; }
+    .pd-breadcrumb a:hover { color: var(--gold); }
+    .pd-breadcrumb .sep { color: var(--gold); }
+
+    .pd-cat {
+      font-size: .68rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .pd-nome {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 2.2vw, 2rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.25;
+      margin: 0 0 20px;
+    }
+
+    .pd-divider { border: none; border-top: 1px solid rgba(255,255,255,.1); margin: 18px 0; }
+
+    /* Preço */
+    .pd-preco-principal {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.02em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .pd-preco-de {
+      font-size: .85rem;
+      color: rgba(255,255,255,.35);
+      text-decoration: line-through;
+      margin-bottom: 4px;
+    }
+    .pd-preco-boleto {
+      font-size: .88rem;
+      font-weight: 600;
+      color: #6ee09e;
+      margin-bottom: 4px;
+    }
+    .pd-parcelas {
+      font-size: .8rem;
+      color: rgba(255,255,255,.45);
+    }
+    .pd-parcelas strong { color: rgba(255,255,255,.75); }
+
+    /* Opções */
+    .pd-opcao-label {
+      font-size: .75rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.45);
+      margin-bottom: 10px;
+    }
+    .pd-opcao-label span { color: #fff; font-weight: 600; text-transform: none; letter-spacing: 0; }
+
+    .pd-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .pd-pill {
+      padding: 7px 18px;
+      border-radius: 50px;
+      border: 1.5px solid rgba(255,255,255,.2);
+      background: transparent;
+      color: rgba(255,255,255,.6);
+      font-size: .8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color .2s, color .2s, background .2s;
+      font-family: inherit;
+    }
+    .pd-pill.active, .pd-pill:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(198,169,107,.1);
+    }
+
+    .pd-btns-opcao {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .pd-btn-opcao {
+      padding: 9px 20px;
+      border-radius: 6px;
+      border: 1.5px solid rgba(255,255,255,.2);
+      background: transparent;
+      color: rgba(255,255,255,.6);
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color .2s, color .2s, background .2s;
+      font-family: inherit;
+    }
+    .pd-btn-opcao.active, .pd-btn-opcao:hover {
+      border-color: #fff;
+      color: #fff;
+      background: rgba(255,255,255,.08);
+    }
+
+    /* Quantidade + Comprar */
+    .pd-buy-row {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+      margin-bottom: 14px;
+    }
+    .pd-qty {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid rgba(255,255,255,.2);
+      border-radius: 6px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .pd-qty button {
+      width: 40px;
+      height: 100%;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,.7);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pd-qty button:hover { background: rgba(255,255,255,.07); color: #fff; }
+    .pd-qty input {
+      width: 40px;
+      text-align: center;
+      background: transparent;
+      border: none;
+      border-left: 1px solid rgba(255,255,255,.1);
+      border-right: 1px solid rgba(255,255,255,.1);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 600;
+      font-family: inherit;
+      -moz-appearance: textfield;
+    }
+    .pd-qty input::-webkit-outer-spin-button,
+    .pd-qty input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    .pd-btn-comprar {
+      flex: 1;
+      background: var(--gold, #c6a96b);
+      color: var(--dark, #1a1a1a);
+      border: none;
+      border-radius: 6px;
+      font-size: .88rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+      font-family: inherit;
+      padding: 0 20px;
+    }
+    .pd-btn-comprar:hover { background: var(--gold-light, #d9bf8a); transform: translateY(-1px); }
+
+    .pd-btn-wpp {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: transparent;
+      color: #25D366;
+      border: 1.5px solid #25D366;
+      border-radius: 6px;
+      padding: 13px 20px;
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      font-family: inherit;
+    }
+    .pd-btn-wpp:hover { background: #25D366; color: #fff; }
+
+    /* Descrição */
+    .pd-desc-titulo {
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+      margin-bottom: 10px;
+    }
+    .pd-desc {
+      font-size: .88rem;
+      color: rgba(255,255,255,.6);
+      line-height: 1.75;
+    }
+
+    .pd-btn-voltar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,.3);
+      font-size: .78rem;
+      text-decoration: none;
+      letter-spacing: .06em;
+      transition: color .2s;
+      margin-top: 8px;
+    }
+    .pd-btn-voltar:hover { color: var(--gold); }
+
+    /* ── CARACTERÍSTICAS ─── */
+    .pd-caracteristicas {
+      background: #fff;
+      padding: 64px 0 80px;
+    }
+    .pd-caract-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 32px;
+    }
+    .pd-caract-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    .pd-caract-grupo h4 {
+      font-size: .8rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .pd-caract-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .pd-caract-table tr {
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .pd-caract-table tr:last-child { border-bottom: none; }
+    .pd-caract-table td {
+      padding: 12px 16px;
+      font-size: .85rem;
+      vertical-align: middle;
+    }
+    .pd-caract-table td:first-child {
+      font-weight: 600;
+      color: var(--dark);
+      width: 45%;
+      background: #f8f7f5;
+      border-radius: 4px 0 0 4px;
+    }
+    .pd-caract-table td:last-child {
+      color: #555;
+    }
+    .pd-caract-table tr:nth-child(even) td:first-child { background: #f3f1ee; }
+
+    @media (max-width: 680px) {
+      .pd-caract-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    /* Not found */
+    .produto-not-found { text-align:center; padding:80px 20px; }
+    .produto-not-found h2 { font-family:'Playfair Display',serif; font-size:2rem; margin-bottom:16px; }
+
+    /* ── RESPONSIVO ─── */
+    @media (max-width: 860px) {
+      .pd-wrap { grid-template-columns: 1fr; padding: 16px; gap: 20px; }
+      .pd-gallery { position: static; }
+      .pd-info { position: static; border-radius: 12px; padding: 24px 20px 36px; }
+      .pd-thumbs { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANNOUNCE BAR -->
+  <div class="announce-bar">
+    <div class="announce-track">
+      <span>&#x1F69A;&nbsp; <strong>Frete Gr&aacute;tis</strong> para Todo Brasil &nbsp;&#x25C6;&nbsp; Espelhos Premium sob medida &nbsp;&#x25C6;&nbsp; Parcele em at&eacute; 12x sem juros &nbsp;&#x25C6;&nbsp; +500 clientes satisfeitos &nbsp;&#x25C6;&nbsp;</span>
+      <span aria-hidden="true">&#x1F69A;&nbsp; <strong>Frete Gr&aacute;tis</strong> para Todo Brasil &nbsp;&#x25C6;&nbsp; Espelhos Premium sob medida &nbsp;&#x25C6;&nbsp; Parcele em at&eacute; 12x sem juros &nbsp;&#x25C6;&nbsp; +500 clientes satisfeitos &nbsp;&#x25C6;&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/logo.jpg" alt="La Mirror" class="logo-svg"/>
+        <span>LA MIRROR</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li class="has-dropdown">
+          <a href="produtos.html">PRODUTOS <span class="chev">&#8250;</span></a>
+          <div class="dropdown">
+            <a href="produtos.html?cat=led">Espelhos com LED</a>
+            <a href="produtos.html?cat=bisotado">Espelhos Bisotados</a>
+            <a href="produtos.html?cat=decorativo">Espelhos Decorativos</a>
+            <a href="produtos.html?cat=oferta">Ofertas Especiais</a>
+          </div>
+        </li>
+        <li><a href="index.html#espelhos">ESPELHOS</a></li>
+        <li><a href="index.html#ofertas">OFERTAS</a></li>
+      </ul>
+      <div class="nav-icons">
+        <button class="icon-btn cart-btn" id="cartBtn" aria-label="Carrinho">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-badge" id="cartBadge"></span>
+        </button>
+        <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="produtos.html">Produtos</a>
+      <a href="index.html#espelhos">Espelhos</a>
+      <a href="index.html#ofertas">Ofertas</a>
+      <a href="index.html#contato">Contato</a>
+    </div>
+  </nav>
+
+  <!-- CONTEÚDO -->
+  <main class="produto-page">
+    <div id="produtoConteudo">
+      <div class="produto-not-found"><h2>Carregando...</h2></div>
+    </div>
+    <div id="produtoCaracteristicas"></div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-col footer-brand">
+          <div class="footer-logo">
+            <img src="assets/images/logo.jpg" alt="La Mirror" width="32" height="32" style="border-radius:50%;filter:invert(1)"/>
+            <span>LA MIRROR</span>
+          </div>
+          <p>Toque de luxo para seu ambiente com espelhos de alta qualidade.</p>
+          <div class="footer-seals">
+            <div class="seal">&#x1F512; Compra Segura</div>
+            <div class="seal">&#x1F69A; Frete Gr&aacute;tis</div>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Links R&aacute;pidos</h4>
+          <ul>
+            <li><a href="produtos.html">Todos Produtos</a></li>
+            <li><a href="produtos.html?cat=led">Espelhos com LED</a></li>
+            <li><a href="produtos.html?cat=oferta">Ofertas</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <ul class="footer-contact">
+            <li>&#x1F4DE; (11) 98191-5968</li>
+            <li>&#x2709;&#xFE0F; contato@lamirror.com.br</li>
+            <li>&#x1F4CD; Rua Vergueiro, 5661 - Vila Dom Pedro I, S&atilde;o Paulo - SP, 04273-000</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Redes Sociais</h4>
+          <div class="social-row">
+            <a href="#" class="soc-btn" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="#" class="soc-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-hr"/>
+      <div class="footer-bottom">
+        <div class="payment-wrap">
+          <span>Formas de pagamento</span>
+          <div class="pay-cards">
+            <div class="pay-card"><span class="visa">VISA</span></div>
+            <div class="pay-card pay-mc"><span class="mc-r"></span><span class="mc-o"></span></div>
+            <div class="pay-card"><span class="mp">mercado<br/>pago</span></div>
+            <div class="pay-card"><span class="pp"><b style="color:#003087">Pay</b><b style="color:#009cde">Pal</b></span></div>
+          </div>
+        </div>
+        <p class="copy">&copy; 2026 La Mirror. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/5511981915968" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script src="script.js?v=2"></script>
+  <script src="produtos.js?v=2"></script>
+  <script>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get('id'));
+    const p = PRODUTOS.find(x => x.id === id);
+    const el = document.getElementById('produtoConteudo');
+
+    if (!p) {
+      el.innerHTML = '<div class="produto-not-found container"><h2>Produto não encontrado</h2><p>O produto que você procura não existe ou foi removido.</p><a href="produtos.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:24px;color:var(--gold);text-decoration:none;">&#8592; Voltar aos Produtos</a></div>';
+      return;
+    }
+
+    document.title = p.nome + ' — La Mirror';
+
+    const badges = p.badges.map(b =>
+      `<span class="badge ${b}">${b==='oferta'?'Oferta':b==='novo'?'Novo':'Destaque'}</span>`
+    ).join('');
+
+    const fotos = p.fotos || [p.img];
+    const precoOriginalHtml = p.precoOriginal
+      ? `<div class="pd-preco-de">De R$ ${p.precoOriginal.toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>`
+      : '';
+
+    const boletoPct = 0.05;
+    const precoComBoleto = (p.preco * (1 - boletoPct)).toLocaleString('pt-BR',{minimumFractionDigits:2});
+    const parcela = (p.preco / 12).toLocaleString('pt-BR',{minimumFractionDigits:2});
+
+    const msg = encodeURIComponent('Olá! Tenho interesse no produto: ' + p.nome + ' (R$ ' + p.preco.toLocaleString('pt-BR',{minimumFractionDigits:2}) + '). Poderia me passar mais informações?');
+
+    const thumbsHtml = fotos.map((f, i) =>
+      `<div class="pd-thumb ${i===0?'active':''}" onclick="trocarFoto(this,'${f}')"><img src="${f}" alt="" loading="lazy"/></div>`
+    ).join('');
+
+    // Mostrar opções LED apenas se o produto for da categoria LED
+    const opcoesLed = p.cat === 'led' ? `
+      <div>
+        <div class="pd-opcao-label">Cor da Luz: <span id="corAtiva">Frio</span></div>
+        <div class="pd-pills">
+          <button class="pd-pill active" onclick="selecionarOpcao(this, 'corAtiva')">Frio</button>
+          <button class="pd-pill" onclick="selecionarOpcao(this, 'corAtiva')">Quente</button>
+          <button class="pd-pill" onclick="selecionarOpcao(this, 'corAtiva')">Neutro</button>
+        </div>
+      </div>
+    ` : '';
+
+    el.innerHTML = `
+      <div class="pd-wrap">
+
+        <!-- Galeria -->
+        <div class="pd-gallery">
+          <div class="pd-img-area">
+            <div class="pd-img-card" id="zoomCard">
+              <img src="${fotos[0]}" alt="${p.nome}" id="imgPrincipal" loading="eager"/>
+              <div class="pd-badges">${badges}</div>
+              <div class="zoom-indicator" id="zoomIndicator"></div>
+              <div class="zoom-panel" id="zoomPanel">
+                <img src="${fotos[0]}" id="zoomPanelImg" alt="zoom"/>
+              </div>
+            </div>
+          </div>
+          ${fotos.length > 1 ? `<div class="pd-thumbs">${thumbsHtml}</div>` : ''}
+        </div>
+
+        <!-- Informações -->
+        <div class="pd-info">
+
+          <nav class="pd-breadcrumb">
+            <a href="index.html">Início</a>
+            <span class="sep">›</span>
+            <a href="produtos.html">Produtos</a>
+            <span class="sep">›</span>
+            ${p.nome}
+          </nav>
+
+          <span class="pd-cat">${p.catLabel}</span>
+          <h1 class="pd-nome">${p.nome}</h1>
+
+          <hr class="pd-divider"/>
+
+          <!-- Preço -->
+          <div style="margin-bottom:18px">
+            ${precoOriginalHtml}
+            <div class="pd-preco-principal">R$ ${p.preco.toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>
+            <div class="pd-preco-boleto">R$ ${precoComBoleto} com Boleto (5% off)</div>
+            <div class="pd-parcelas">ou <strong>12x de R$ ${parcela}</strong> sem juros no cartão</div>
+          </div>
+
+          <hr class="pd-divider"/>
+
+          <!-- Opções LED -->
+          ${opcoesLed}
+
+          <!-- Orientação -->
+          <div style="margin-bottom:20px">
+            <div class="pd-opcao-label">Disposição: <span id="orientAtiva">Horizontal</span></div>
+            <div class="pd-btns-opcao">
+              <button class="pd-btn-opcao active" onclick="selecionarBtnOpcao(this, 'orientAtiva')">Horizontal</button>
+              <button class="pd-btn-opcao" onclick="selecionarBtnOpcao(this, 'orientAtiva')">Vertical</button>
+            </div>
+          </div>
+
+          <hr class="pd-divider"/>
+
+          <!-- Comprar -->
+          <div class="pd-buy-row">
+            <div class="pd-qty">
+              <button onclick="ajustarQty(-1)" aria-label="Diminuir">−</button>
+              <input type="number" id="qtyInput" value="1" min="1" max="99" readonly/>
+              <button onclick="ajustarQty(1)" aria-label="Aumentar">+</button>
+            </div>
+            <button class="pd-btn-comprar" onclick="pedirWppProduto()">Comprar</button>
+          </div>
+
+          <a href="https://wa.me/5511981915968?text=${msg}" target="_blank" class="pd-btn-wpp">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Falar pelo WhatsApp
+          </a>
+
+          <hr class="pd-divider"/>
+
+          <div class="pd-desc-titulo">Descrição</div>
+          <p class="pd-desc">${p.desc}</p>
+
+          <a href="produtos.html" class="pd-btn-voltar">&#8592; Voltar aos Produtos</a>
+
+        </div>
+      </div>
+    `;
+
+    // Guarda referência ao produto atual para uso nos handlers
+    window._produtoAtual = p;
+
+    // Renderiza características
+    if (p.specs) {
+      const s = p.specs;
+      function row(label, val) {
+        if (!val) return '';
+        return `<tr><td>${label}</td><td>${val}</td></tr>`;
+      }
+      const principaisHtml = [
+        row('Marca', s.marca),
+        row('Forma do espelho', s.forma),
+        row('Com luz', s.comLuz),
+        row('Temperatura da luz', s.tempLuz),
+        row('Cor da moldura', s.corMoldura),
+        row('Tipo de alimentação', s.alimentacao)
+      ].filter(Boolean).join('');
+
+      const dimensoesHtml = [
+        row('Altura', s.altura),
+        row('Largura', s.largura),
+        row('Diâmetro', s.diametro),
+        row('Peso', s.peso),
+        row('Espessura', s.espessura)
+      ].filter(Boolean).join('');
+
+      const outrosHtml = [
+        row('Estilo', s.estilo)
+      ].filter(Boolean).join('');
+
+      if (principaisHtml || dimensoesHtml || outrosHtml) {
+        document.getElementById('produtoCaracteristicas').innerHTML = `
+          <section class="pd-caracteristicas">
+            <div class="container">
+              <h2 class="pd-caract-titulo">Características do produto</h2>
+              <div class="pd-caract-grid">
+                ${principaisHtml ? `
+                <div class="pd-caract-grupo">
+                  <h4>Características principais</h4>
+                  <table class="pd-caract-table"><tbody>${principaisHtml}</tbody></table>
+                </div>` : ''}
+                <div>
+                  ${dimensoesHtml ? `
+                  <div class="pd-caract-grupo" style="margin-bottom:32px">
+                    <h4>Peso e dimensões</h4>
+                    <table class="pd-caract-table"><tbody>${dimensoesHtml}</tbody></table>
+                  </div>` : ''}
+                  ${outrosHtml ? `
+                  <div class="pd-caract-grupo">
+                    <h4>Outros</h4>
+                    <table class="pd-caract-table"><tbody>${outrosHtml}</tbody></table>
+                  </div>` : ''}
+                </div>
+              </div>
+            </div>
+          </section>
+        `;
+      }
+    }
+  })();
+
+  function trocarFoto(thumb, src) {
+    document.querySelectorAll('.pd-thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+    document.getElementById('imgPrincipal').src = src;
+    const panelImg = document.getElementById('zoomPanelImg');
+    if (panelImg) panelImg.src = src;
+  }
+
+  // ── ZOOM ESTILO MERCADO LIVRE ──────────────
+  setTimeout(function() {
+    const card      = document.getElementById('zoomCard');
+    const mainImg   = document.getElementById('imgPrincipal');
+    const indicator = document.getElementById('zoomIndicator');
+    const panel     = document.getElementById('zoomPanel');
+    const panelImg  = document.getElementById('zoomPanelImg');
+    if (!card || !mainImg || !panel) return;
+
+    const ZOOM = 3;
+    const PANEL_SIZE = 420;
+
+    function getImgRect() { return mainImg.getBoundingClientRect(); }
+    function getCardRect() { return card.getBoundingClientRect(); }
+
+    card.addEventListener('mouseenter', function() {
+      panel.style.display = 'block';
+      indicator.style.display = 'block';
+    });
+
+    card.addEventListener('mouseleave', function() {
+      panel.style.display = 'none';
+      indicator.style.display = 'none';
+    });
+
+    card.addEventListener('mousemove', function(e) {
+      const imgR  = getImgRect();
+      const cardR = getCardRect();
+
+      // Posição do cursor relativa à imagem
+      let ix = e.clientX - imgR.left;
+      let iy = e.clientY - imgR.top;
+
+      // Limita dentro da imagem
+      ix = Math.max(0, Math.min(ix, imgR.width));
+      iy = Math.max(0, Math.min(iy, imgR.height));
+
+      // Tamanho do indicador (área visível no painel)
+      const indW = PANEL_SIZE / ZOOM;
+      const indH = PANEL_SIZE / ZOOM;
+
+      // Posição do indicador (clampado para não sair da imagem)
+      let indX = ix - indW / 2;
+      let indY = iy - indH / 2;
+      indX = Math.max(0, Math.min(indX, imgR.width  - indW));
+      indY = Math.max(0, Math.min(indY, imgR.height - indH));
+
+      // Indicador relativo ao card
+      indicator.style.left   = (imgR.left - cardR.left + indX) + 'px';
+      indicator.style.top    = (imgR.top  - cardR.top  + indY) + 'px';
+      indicator.style.width  = indW + 'px';
+      indicator.style.height = indH + 'px';
+
+      // Imagem no painel: ampliada, offset para mostrar a região certa
+      const zW = imgR.width  * ZOOM;
+      const zH = imgR.height * ZOOM;
+      panelImg.style.width  = zW + 'px';
+      panelImg.style.height = zH + 'px';
+      panelImg.style.left   = -(indX * ZOOM) + 'px';
+      panelImg.style.top    = -(indY * ZOOM) + 'px';
+    });
+  }, 600);
+
+
+  function selecionarOpcao(btn, labelId) {
+    btn.closest('.pd-pills').querySelectorAll('.pd-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(labelId).textContent = btn.textContent;
+  }
+
+  function selecionarBtnOpcao(btn, labelId) {
+    btn.closest('.pd-btns-opcao').querySelectorAll('.pd-btn-opcao').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(labelId).textContent = btn.textContent;
+  }
+
+  function ajustarQty(delta) {
+    const input = document.getElementById('qtyInput');
+    const atual = parseInt(input.value) || 1;
+    const novo = Math.max(1, Math.min(99, atual + delta));
+    input.value = novo;
+  }
+
+  function pedirWppProduto() {
+    const p = window._produtoAtual;
+    if (!p) return;
+    const qty = document.getElementById('qtyInput')?.value || 1;
+    const msg = encodeURIComponent('Olá! Quero comprar ' + qty + 'x ' + p.nome + ' (R$ ' + p.preco.toLocaleString('pt-BR',{minimumFractionDigits:2}) + '). Poderia me ajudar?');
+    window.open('https://wa.me/5511981915968?text=' + msg, '_blank');
+  }
+  </script>
+</body>
+</html>
