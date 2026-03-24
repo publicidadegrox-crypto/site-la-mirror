@@ -221,87 +221,93 @@ fadeEls.forEach(el => {
   }, { passive: true });
 })();
 
-/* ── CARRINHO ────────────────────────── */
+/* ── CARRINHO — badge (todas as páginas) ── */
+(function() {
+  function getCart() {
+    try { return JSON.parse(localStorage.getItem('lm_cart') || '[]'); } catch(e) { return []; }
+  }
+  function updateBadge() {
+    var badge = document.getElementById('cartBadge');
+    if (!badge) return;
+    var count = getCart().reduce(function(s, i) { return s + (i.qty || 1); }, 0);
+    badge.textContent = count;
+    badge.style.display = count > 0 ? 'flex' : 'none';
+  }
+  updateBadge();
+  window.addEventListener('storage', updateBadge);
+})();
+
+/* ── CARRINHO — drawer (só index.html) ── */
 (function() {
   var cartBtn     = document.getElementById('cartBtn');
   var cartClose   = document.getElementById('cartClose');
   var cartOverlay = document.getElementById('cartOverlay');
   var cartDrawer  = document.getElementById('cartDrawer');
-  var cartBadge   = document.getElementById('cartBadge');
   var cartBody    = document.getElementById('cartBody');
-  if (!cartBtn || !cartDrawer) return;
+  if (!cartDrawer) return;
 
   function getCart() {
     try { return JSON.parse(localStorage.getItem('lm_cart') || '[]'); } catch(e) { return []; }
   }
 
-  function updateBadge() {
-    var count = getCart().length;
-    if (cartBadge) {
-      cartBadge.textContent = count;
-      cartBadge.style.display = count > 0 ? 'flex' : 'none';
-    }
-    if (cartBody) {
-      if (count === 0) {
-        cartBody.innerHTML = '<p class="cart-empty">Seu carrinho está vazio.</p>';
-      } else {
-        var items = getCart();
-        cartBody.innerHTML = items.map(function(item) {
-          return '<div class="cart-item"><span class="cart-item-name">' + item.nome + '</span><span class="cart-item-price">' + item.preco + '</span></div>';
-        }).join('');
-      }
+  function updateDrawer() {
+    if (!cartBody) return;
+    var items = getCart();
+    if (items.length === 0) {
+      cartBody.innerHTML = '<p class="cart-empty">Seu carrinho está vazio.</p>';
+    } else {
+      cartBody.innerHTML = items.map(function(item) {
+        return '<div class="cart-item"><span class="cart-item-name">' + item.nome + '</span><span class="cart-item-price">' + item.preco + '</span></div>';
+      }).join('');
     }
   }
 
   function openCart() {
+    updateDrawer();
     cartDrawer.classList.add('open');
-    cartOverlay.classList.add('open');
+    if (cartOverlay) cartOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
 
   function closeCart() {
     cartDrawer.classList.remove('open');
-    cartOverlay.classList.remove('open');
+    if (cartOverlay) cartOverlay.classList.remove('open');
     document.body.style.overflow = '';
   }
 
-  cartBtn.addEventListener('click', openCart);
+  if (cartBtn) cartBtn.addEventListener('click', openCart);
   if (cartClose) cartClose.addEventListener('click', closeCart);
   if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
-  window.addEventListener('storage', updateBadge);
-  updateBadge();
+  window.addEventListener('storage', updateDrawer);
 })();
 
 /* ── PARALLAX ────────────────────────── */
 (function() {
-  var ticking = false;
+  var lastY = -1;
 
-  function updateParallax() {
-    var scrollY = window.scrollY;
+  function loop() {
+    var scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
 
-    // Hero background parallax
-    var hero = document.getElementById('parallaxHero');
-    if (hero) {
-      hero.style.transform = 'translateY(' + (scrollY * 0.35) + 'px)';
+    if (scrollY !== lastY) {
+      lastY = scrollY;
+
+      // Hero background
+      var hero = document.getElementById('parallaxHero');
+      if (hero) {
+        hero.style.transform = 'translateY(' + (scrollY * 0.4) + 'px)';
+      }
+
+      // Elementos com data-parallax
+      document.querySelectorAll('[data-parallax]').forEach(function(el) {
+        var speed = parseFloat(el.getAttribute('data-parallax')) || 0.12;
+        var rect  = el.getBoundingClientRect();
+        var center = rect.top + rect.height / 2 - window.innerHeight / 2;
+        el.style.transform = 'translateY(' + (center * speed) + 'px)';
+      });
     }
 
-    // Seções com data-parallax
-    document.querySelectorAll('[data-parallax]').forEach(function(el) {
-      var speed = parseFloat(el.getAttribute('data-parallax')) || 0.1;
-      var rect  = el.getBoundingClientRect();
-      var center = rect.top + rect.height / 2 - window.innerHeight / 2;
-      el.style.transform = 'translateY(' + (center * speed) + 'px)';
-    });
-
-    ticking = false;
+    requestAnimationFrame(loop);
   }
 
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      requestAnimationFrame(updateParallax);
-      ticking = true;
-    }
-  }, { passive: true });
-
-  updateParallax();
+  requestAnimationFrame(loop);
 })();

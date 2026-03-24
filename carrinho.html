@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrinho — La Mirror</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    .cart-page {
+      padding-top: 72px;
+      background: #F4F1EC;
+      min-height: 100vh;
+    }
+
+    /* ── HERO ── */
+    .cart-hero {
+      background: var(--black);
+      padding: 2.8rem 0 2.2rem;
+      text-align: center;
+      position: relative;
+    }
+    .cart-hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(198,169,107,.4), transparent);
+    }
+    .cart-hero-eyebrow {
+      font-size: .6rem; font-weight: 600; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .7rem;
+    }
+    .cart-hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700; color: #fff; margin-bottom: .4rem;
+    }
+    .cart-hero p { font-size: .82rem; color: rgba(255,255,255,.4); letter-spacing: .06em; }
+
+    /* ── BREADCRUMB ── */
+    .cart-breadcrumb {
+      background: #fafafa;
+      border-bottom: 1px solid var(--border);
+      padding: .65rem 0;
+    }
+    .cart-breadcrumb .container {
+      display: flex; align-items: center;
+      gap: .5rem; font-size: .72rem; color: var(--gray);
+    }
+    .cart-breadcrumb a { color: var(--gray); transition: color var(--trans); }
+    .cart-breadcrumb a:hover { color: var(--black); }
+
+    /* ── LAYOUT ── */
+    .cart-wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* ── ITENS DO CARRINHO ── */
+    .cart-items-col h2 {
+      font-family: var(--font-serif);
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--dark); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .cart-items-col h2 span {
+      font-family: var(--font-sans);
+      font-size: .72rem; font-weight: 600; color: var(--gray);
+      background: #efefef; padding: .2rem .6rem; border-radius: 20px;
+    }
+
+    .cart-item {
+      background: #fff;
+      border-radius: 14px;
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      transition: box-shadow var(--trans);
+    }
+    .cart-item:hover { box-shadow: 0 4px 20px rgba(0,0,0,.1); }
+
+    .cart-item-img {
+      width: 100px; height: 110px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f5f5f5;
+      flex-shrink: 0;
+    }
+    .cart-item-img img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-cat {
+      font-size: .6rem; font-weight: 600; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: .3rem;
+    }
+    .cart-item-nome {
+      font-family: var(--font-serif);
+      font-size: 1rem; font-weight: 700;
+      color: var(--dark); line-height: 1.3;
+      margin-bottom: .5rem;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .cart-item-preco-unit {
+      font-size: .78rem; color: var(--gray); margin-bottom: .6rem;
+    }
+
+    /* Controle de quantidade */
+    .cart-item-qty {
+      display: inline-flex; align-items: center;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      overflow: hidden; height: 36px;
+    }
+    .cart-item-qty button {
+      width: 36px; height: 100%;
+      background: none; border: none; cursor: pointer;
+      color: var(--gray); font-size: 1rem;
+      transition: background var(--trans), color var(--trans);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cart-item-qty button:hover { background: #f5f5f5; color: var(--black); }
+    .cart-item-qty input {
+      width: 38px; text-align: center;
+      border: none;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      font-size: .88rem; font-weight: 600;
+      color: var(--dark); background: none;
+      -moz-appearance: textfield;
+    }
+    .cart-item-qty input::-webkit-outer-spin-button,
+    .cart-item-qty input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    .cart-item-right {
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: .7rem;
+    }
+    .cart-item-preco-total {
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--dark);
+    }
+    .cart-item-remove {
+      background: none; border: none; cursor: pointer;
+      color: #ccc; font-size: .72rem; letter-spacing: .06em;
+      text-transform: uppercase; font-weight: 600;
+      display: flex; align-items: center; gap: .3rem;
+      transition: color var(--trans); font-family: inherit;
+      padding: 0;
+    }
+    .cart-item-remove:hover { color: #e53e3e; }
+
+    /* ── ESTADO VAZIO ── */
+    .cart-empty-state {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .cart-empty-icon { font-size: 3.5rem; margin-bottom: 1rem; opacity: .3; }
+    .cart-empty-state h3 {
+      font-family: var(--font-serif);
+      font-size: 1.4rem; color: var(--dark); margin-bottom: .6rem;
+    }
+    .cart-empty-state p { font-size: .88rem; color: var(--gray); margin-bottom: 2rem; }
+    .btn-voltar-loja {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--black); color: #fff;
+      padding: .85rem 2rem; border-radius: 8px;
+      font-size: .8rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; text-decoration: none;
+      transition: background var(--trans);
+    }
+    .btn-voltar-loja:hover { background: #333; }
+
+    /* ── RESUMO DO PEDIDO ── */
+    .cart-summary {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,.08);
+      position: sticky;
+      top: 100px;
+    }
+    .cart-summary h2 {
+      font-family: var(--font-serif);
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--dark); margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .summary-row {
+      display: flex; justify-content: space-between;
+      align-items: center; font-size: .85rem;
+      color: #555; margin-bottom: .8rem;
+    }
+    .summary-row.total {
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--dark); margin-top: 1rem;
+      padding-top: 1rem; border-top: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+    .summary-row .frete-gratis {
+      color: #27a85f; font-weight: 600; font-size: .82rem;
+    }
+    .summary-parcelas {
+      font-size: .78rem; color: var(--gray);
+      text-align: right; margin-top: .4rem; margin-bottom: 1.5rem;
+    }
+
+    .btn-finalizar {
+      display: flex; align-items: center; justify-content: center;
+      gap: .6rem; width: 100%;
+      background: #25D366; color: #fff;
+      border: none; border-radius: 10px;
+      padding: 1rem; font-size: .88rem;
+      font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; cursor: pointer;
+      transition: background var(--trans), transform var(--trans);
+      font-family: inherit; text-decoration: none;
+      box-shadow: 0 4px 16px rgba(37,211,102,.3);
+    }
+    .btn-finalizar:hover { background: #1db954; transform: translateY(-1px); }
+
+    .btn-continuar {
+      display: flex; align-items: center; justify-content: center;
+      gap: .5rem; width: 100%;
+      background: none; color: var(--gray);
+      border: 1.5px solid var(--border);
+      border-radius: 10px; padding: .8rem;
+      font-size: .8rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      cursor: pointer; margin-top: .8rem;
+      transition: border-color var(--trans), color var(--trans);
+      font-family: inherit; text-decoration: none;
+    }
+    .btn-continuar:hover { border-color: var(--black); color: var(--black); }
+
+    /* Selos */
+    .summary-seals {
+      display: flex; gap: .6rem; margin-top: 1.5rem;
+      padding-top: 1.2rem; border-top: 1px solid #f0f0f0;
+    }
+    .summary-seal {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; gap: .4rem;
+      font-size: .58rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--gray); text-align: center;
+    }
+    .summary-seal span:first-child { font-size: 1.1rem; }
+
+    /* Coupon */
+    .coupon-wrap {
+      margin-top: 1.2rem;
+      display: flex; gap: .5rem;
+    }
+    .coupon-input {
+      flex: 1; padding: .65rem .9rem;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: .82rem; font-family: inherit;
+      color: var(--dark); outline: none;
+      transition: border-color var(--trans);
+    }
+    .coupon-input:focus { border-color: var(--black); }
+    .coupon-btn {
+      padding: .65rem 1rem;
+      background: var(--black); color: #fff;
+      border: none; border-radius: 8px;
+      font-size: .75rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      cursor: pointer; white-space: nowrap; font-family: inherit;
+      transition: background var(--trans);
+    }
+    .coupon-btn:hover { background: #333; }
+    .coupon-msg { font-size: .72rem; color: var(--gray); margin-top: .4rem; min-height: 1rem; }
+
+    /* ── RESPONSIVO ── */
+    @media (max-width: 860px) {
+      .cart-wrap { grid-template-columns: 1fr; padding: 1.5rem 1rem 4rem; gap: 1.5rem; }
+      .cart-summary { position: static; }
+      .cart-item { grid-template-columns: 80px 1fr; }
+      .cart-item-right { flex-direction: row; align-items: center; grid-column: 1/-1; justify-content: space-between; }
+    }
+    @media (max-width: 480px) {
+      .cart-item { grid-template-columns: 1fr; }
+      .cart-item-img { width: 100%; height: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANNOUNCE BAR -->
+  <div class="announce-bar">
+    <div class="announce-track">
+      <span>&#x1F69A;&nbsp; <strong>Frete Gr&aacute;tis</strong> para Todo Brasil &nbsp;&#x25C6;&nbsp; Espelhos Premium sob medida &nbsp;&#x25C6;&nbsp; Parcele em at&eacute; 12x sem juros &nbsp;&#x25C6;&nbsp; +500 clientes satisfeitos &nbsp;&#x25C6;&nbsp;</span>
+      <span aria-hidden="true">&#x1F69A;&nbsp; <strong>Frete Gr&aacute;tis</strong> para Todo Brasil &nbsp;&#x25C6;&nbsp; Espelhos Premium sob medida &nbsp;&#x25C6;&nbsp; Parcele em at&eacute; 12x sem juros &nbsp;&#x25C6;&nbsp; +500 clientes satisfeitos &nbsp;&#x25C6;&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/logo.jpg" alt="La Mirror" class="logo-svg"/>
+        <span>LA MIRROR</span>
+      </a>
+      <ul class="nav-links">
+        <li class="has-dropdown">
+          <a href="produtos.html">PRODUTOS <span class="chev">&#8250;</span></a>
+          <div class="dropdown">
+            <a href="produtos.html?cat=led">Espelhos com LED</a>
+            <a href="produtos.html?cat=bisotado">Espelhos Bisotados</a>
+            <a href="produtos.html?cat=decorativo">Espelhos Decorativos</a>
+            <a href="produtos.html?cat=oferta">Ofertas Especiais</a>
+          </div>
+        </li>
+        <li><a href="produtos.html?cat=led">ESPELHOS</a></li>
+        <li><a href="produtos.html?cat=oferta">OFERTAS</a></li>
+      </ul>
+      <div class="nav-icons">
+        <a href="carrinho.html" class="icon-btn cart-btn" aria-label="Carrinho" style="position:relative">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-badge" id="cartBadge" style="display:none"></span>
+        </a>
+        <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="produtos.html">Todos os Produtos</a>
+      <a href="produtos.html?cat=led">Espelhos com LED</a>
+      <a href="produtos.html?cat=bisotado">Espelhos Bisotados</a>
+      <a href="produtos.html?cat=decorativo">Espelhos Decorativos</a>
+      <a href="produtos.html?cat=oferta">Ofertas</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="cart-hero">
+    <span class="cart-hero-eyebrow">La Mirror</span>
+    <h1>Meu Carrinho</h1>
+    <p>Revise seus produtos antes de finalizar</p>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <div class="cart-breadcrumb">
+    <div class="container">
+      <a href="index.html">Home</a>
+      <span>&#8250;</span>
+      <a href="produtos.html">Produtos</a>
+      <span>&#8250;</span>
+      <span>Carrinho</span>
+    </div>
+  </div>
+
+  <!-- CONTEÚDO -->
+  <main class="cart-page">
+    <div class="cart-wrap">
+
+      <!-- COLUNA DE ITENS -->
+      <div class="cart-items-col">
+        <h2>Itens do Pedido <span id="itemCount"></span></h2>
+        <div id="cartItemsList"></div>
+      </div>
+
+      <!-- RESUMO -->
+      <aside class="cart-summary" id="cartSummary" style="display:none">
+        <h2>Resumo do Pedido</h2>
+
+        <div class="summary-row">
+          <span>Subtotal (<span id="summaryQty">0</span> item)</span>
+          <span id="summarySubtotal">R$ 0,00</span>
+        </div>
+        <div class="summary-row">
+          <span>Frete</span>
+          <span class="frete-gratis">&#x1F69A; Gr&aacute;tis</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span id="summaryTotal">R$ 0,00</span>
+        </div>
+        <div class="summary-parcelas" id="summaryParcelas"></div>
+
+        <a href="#" id="btnFinalizar" class="btn-finalizar" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Finalizar pelo WhatsApp
+        </a>
+        <a href="produtos.html" class="btn-continuar">
+          &#8592; Continuar Comprando
+        </a>
+
+        <!-- Cupom -->
+        <div class="coupon-wrap">
+          <input type="text" class="coupon-input" id="couponInput" placeholder="Código de desconto"/>
+          <button class="coupon-btn" onclick="aplicarCupom()">Aplicar</button>
+        </div>
+        <div class="coupon-msg" id="couponMsg"></div>
+
+        <!-- Selos -->
+        <div class="summary-seals">
+          <div class="summary-seal"><span>&#x1F512;</span><span>Compra Segura</span></div>
+          <div class="summary-seal"><span>&#x1F69A;</span><span>Frete Gr&aacute;tis</span></div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-col footer-brand">
+          <div class="footer-logo">
+            <img src="assets/images/logo.jpg" alt="La Mirror" width="32" height="32" style="border-radius:50%;filter:invert(1)"/>
+            <span>LA MIRROR</span>
+          </div>
+          <p>Toque de luxo para seu ambiente com espelhos de alta qualidade.</p>
+          <div class="footer-seals">
+            <div class="seal">&#x1F512; Compra Segura</div>
+            <div class="seal">&#x1F69A; Frete Gr&aacute;tis</div>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Links R&aacute;pidos</h4>
+          <ul>
+            <li><a href="produtos.html">Todos Produtos</a></li>
+            <li><a href="produtos.html?cat=led">Espelhos com LED</a></li>
+            <li><a href="produtos.html?cat=oferta">Ofertas</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <ul class="footer-contact">
+            <li>&#x1F4DE; (11) 98191-5968</li>
+            <li>&#x2709;&#xFE0F; contato@lamirror.com.br</li>
+            <li>&#x1F4CD; Rua Vergueiro, 5661 - Vila Dom Pedro I, S&atilde;o Paulo - SP, 04273-000</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Redes Sociais</h4>
+          <div class="social-row">
+            <a href="#" class="soc-btn" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="#" class="soc-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-hr"/>
+      <div class="footer-bottom">
+        <div class="payment-wrap">
+          <span>Formas de pagamento</span>
+          <div class="pay-cards">
+            <div class="pay-card"><span class="visa">VISA</span></div>
+            <div class="pay-card pay-mc"><span class="mc-r"></span><span class="mc-o"></span></div>
+            <div class="pay-card"><span class="mp">mercado<br/>pago</span></div>
+            <div class="pay-card"><span class="pp"><b style="color:#003087">Pay</b><b style="color:#009cde">Pal</b></span></div>
+          </div>
+        </div>
+        <p class="copy">&copy; 2026 La Mirror. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/5511981915968" target="_blank" class="wpp-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script src="produtos.js?v=3"></script>
+  <script>
+  (function() {
+    var WPP = 'https://wa.me/5511981915968';
+    var CART_KEY = 'lm_cart';
+
+    function fmt(v) {
+      return 'R$ ' + Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    }
+
+    function getCart() {
+      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch(e) { return []; }
+    }
+    function saveCart(c) { localStorage.setItem(CART_KEY, JSON.stringify(c)); }
+
+    function render() {
+      var cart = getCart();
+      var list = document.getElementById('cartItemsList');
+      var summary = document.getElementById('cartSummary');
+      var countEl = document.getElementById('itemCount');
+      var badge = document.getElementById('cartBadge');
+
+      // Enriquecer com dados do produto
+      var items = cart.map(function(item) {
+        var prod = (typeof PRODUTOS !== 'undefined') ? PRODUTOS.find(function(p){ return p.id === item.id; }) : null;
+        return Object.assign({}, item, prod ? {
+          nome: prod.nome, catLabel: prod.catLabel,
+          img: (prod.fotos && prod.fotos[0]) || prod.img,
+          precoUnit: prod.preco
+        } : {});
+      }).filter(function(i){ return i.nome; });
+
+      var totalQty = items.reduce(function(s,i){ return s + (i.qty||1); }, 0);
+      var subtotal = items.reduce(function(s,i){ return s + (i.precoUnit||0) * (i.qty||1); }, 0);
+
+      // Badge
+      if (badge) {
+        badge.textContent = totalQty;
+        badge.style.display = totalQty > 0 ? 'flex' : 'none';
+      }
+
+      if (countEl) countEl.textContent = totalQty + ' item' + (totalQty !== 1 ? 's' : '');
+
+      if (items.length === 0) {
+        if (summary) summary.style.display = 'none';
+        list.innerHTML = '<div class="cart-empty-state">' +
+          '<div class="cart-empty-icon">&#128722;</div>' +
+          '<h3>Seu carrinho est&aacute; vazio</h3>' +
+          '<p>Adicione produtos incr&iacute;veis ao seu carrinho.</p>' +
+          '<a href="produtos.html" class="btn-voltar-loja">&#8592; Ver Produtos</a>' +
+        '</div>';
+        return;
+      }
+
+      if (summary) summary.style.display = 'block';
+
+      // Renderizar itens
+      list.innerHTML = items.map(function(item) {
+        var total = (item.precoUnit||0) * (item.qty||1);
+        return '<div class="cart-item" id="cart-item-' + item.id + '">' +
+          '<div class="cart-item-img"><img src="' + (item.img||'') + '" alt="' + item.nome + '" loading="lazy"/></div>' +
+          '<div class="cart-item-info">' +
+            '<div class="cart-item-cat">' + (item.catLabel||'') + '</div>' +
+            '<div class="cart-item-nome">' + item.nome + '</div>' +
+            '<div class="cart-item-preco-unit">' + fmt(item.precoUnit||0) + ' / unidade</div>' +
+            '<div class="cart-item-qty">' +
+              '<button onclick="changeQty(' + item.id + ', -1)" aria-label="Diminuir">&minus;</button>' +
+              '<input type="number" value="' + (item.qty||1) + '" min="1" max="99" readonly id="qty-' + item.id + '"/>' +
+              '<button onclick="changeQty(' + item.id + ', 1)" aria-label="Aumentar">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="cart-item-right">' +
+            '<div class="cart-item-preco-total">' + fmt(total) + '</div>' +
+            '<button class="cart-item-remove" onclick="removeItem(' + item.id + ')">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>' +
+              'Remover' +
+            '</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      // Resumo
+      var parcela = (subtotal / 12).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+      document.getElementById('summaryQty').textContent = totalQty;
+      document.getElementById('summarySubtotal').textContent = fmt(subtotal);
+      document.getElementById('summaryTotal').textContent = fmt(subtotal);
+      document.getElementById('summaryParcelas').textContent = 'ou 12x de R$ ' + parcela + ' sem juros';
+
+      // Link WhatsApp
+      var linhas = items.map(function(i){ return (i.qty||1) + 'x ' + i.nome + ' (' + fmt(i.precoUnit) + ')'; });
+      var msg = 'Olá! Gostaria de finalizar meu pedido:\n\n' + linhas.join('\n') + '\n\nTotal: ' + fmt(subtotal) + '\n\nPoderia me ajudar?';
+      var btn = document.getElementById('btnFinalizar');
+      if (btn) btn.href = WPP + '?text=' + encodeURIComponent(msg);
+    }
+
+    window.changeQty = function(id, delta) {
+      var cart = getCart();
+      var item = cart.find(function(i){ return i.id === id; });
+      if (!item) return;
+      item.qty = Math.max(1, Math.min(99, (item.qty||1) + delta));
+      saveCart(cart);
+      render();
+    };
+
+    window.removeItem = function(id) {
+      var cart = getCart().filter(function(i){ return i.id !== id; });
+      saveCart(cart);
+      var el = document.getElementById('cart-item-' + id);
+      if (el) {
+        el.style.transition = 'opacity .3s, transform .3s';
+        el.style.opacity = '0';
+        el.style.transform = 'translateX(20px)';
+        setTimeout(render, 300);
+      } else {
+        render();
+      }
+    };
+
+    window.aplicarCupom = function() {
+      var code = (document.getElementById('couponInput').value || '').trim().toUpperCase();
+      var msg = document.getElementById('couponMsg');
+      if (!code) { msg.textContent = 'Digite um código.'; msg.style.color = '#e53e3e'; return; }
+      // Cupons de exemplo
+      if (code === 'LAMIRROR10') {
+        msg.textContent = '✓ Cupom aplicado! 10% de desconto.';
+        msg.style.color = '#27a85f';
+      } else {
+        msg.textContent = 'Cupom inválido ou expirado.';
+        msg.style.color = '#e53e3e';
+      }
+    };
+
+    // Mobile menu
+    var burger = document.getElementById('burger');
+    var mobileMenu = document.getElementById('mobileMenu');
+    if (burger) burger.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+
+    render();
+  })();
+  </script>
+</body>
+</html>
