@@ -262,7 +262,11 @@ fadeEls.forEach(el => {
     var countEl = document.getElementById('cartCount');
 
     if (items.length === 0) {
-      cartBody.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛍️</div><div class="cart-empty-text">Seu carrinho está vazio.<br>Explore nossa coleção de espelhos.</div></div>';
+      cartBody.innerHTML =
+        '<div style="display:flex;flex-direction:column;align-items:center;gap:.8rem;padding:3.5rem 1rem;text-align:center">'
+        + '<span style="font-size:2.5rem;opacity:.3">🛍️</span>'
+        + '<p style="font-size:.85rem;color:#999;line-height:1.6">Seu carrinho está vazio.<br>Explore nossa coleção de espelhos.</p>'
+        + '</div>';
       if (footer) footer.style.display = 'none';
       if (countEl) countEl.textContent = '0 itens';
       return;
@@ -279,23 +283,23 @@ fadeEls.forEach(el => {
       totalQty += qty;
 
       var imgHtml = item.img
-        ? '<img class="cart-item-img" src="' + item.img + '" alt="' + (item.nome || '') + '" loading="lazy"/>'
-        : '<div class="cart-item-img"></div>';
+        ? '<img src="' + item.img + '" alt="' + (item.nome || '') + '" loading="lazy" style="width:78px;min-width:78px;height:88px;object-fit:cover;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);background:#f5f5f5;flex-shrink:0"/>'
+        : '<div style="width:78px;min-width:78px;height:88px;border-radius:10px;background:#f0f0f0;flex-shrink:0"></div>';
 
       var descHtml = item.descricao
-        ? '<div class="cart-item-desc">' + item.descricao + '</div>'
+        ? '<div style="font-size:.71rem;color:#aaa;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">' + item.descricao + '</div>'
         : '';
 
       return (
-        '<div class="cart-item">'
+        '<div style="display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 0;border-bottom:1px solid #f0f0f0">'
         + imgHtml
-        + '<div class="cart-item-info">'
-        +   '<div class="cart-item-name">' + (item.nome || 'Produto') + '</div>'
+        + '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:.28rem">'
+        +   '<div style="font-size:.84rem;font-weight:700;color:#1a1a1a;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">' + (item.nome || 'Produto') + '</div>'
         +   descHtml
-        +   '<div class="cart-item-unit">Unitário: ' + fmt(preco) + '</div>'
-        +   '<div class="cart-item-bottom">'
-        +     '<span class="cart-item-qty-badge">Qtd: ' + qty + '</span>'
-        +     '<span class="cart-item-subtotal">' + fmt(subtotal) + '</span>'
+        +   '<div style="font-size:.7rem;color:#bbb;margin-top:.1rem">Unit.: ' + fmt(preco) + '</div>'
+        +   '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:.4rem">'
+        +     '<span style="font-size:.7rem;font-weight:600;color:#666;background:#f5f5f5;border-radius:20px;padding:.2rem .7rem">Qtd: ' + qty + '</span>'
+        +     '<span style="font-size:.9rem;font-weight:800;color:#C6A96B">' + fmt(subtotal) + '</span>'
         +   '</div>'
         + '</div>'
         + '</div>'
