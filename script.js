@@ -251,52 +251,60 @@ fadeEls.forEach(el => {
   }
 
   function fmt(n) {
-    return 'R$ ' + Number(n).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return 'R$\u00a0' + Number(n).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   function updateDrawer() {
     if (!cartBody) return;
-    var items = getCart();
+    var items   = getCart();
     var footer  = document.getElementById('cartFooter');
     var totalEl = document.getElementById('cartTotalValue');
     var countEl = document.getElementById('cartCount');
 
     if (items.length === 0) {
-      cartBody.innerHTML = '<p class="cart-empty">Seu carrinho está vazio.</p>';
+      cartBody.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛍️</div><div class="cart-empty-text">Seu carrinho está vazio.<br>Explore nossa coleção de espelhos.</div></div>';
       if (footer) footer.style.display = 'none';
-      if (countEl) countEl.textContent = '';
+      if (countEl) countEl.textContent = '0 itens';
       return;
     }
 
-    var total = 0;
+    var total    = 0;
     var totalQty = 0;
+
     cartBody.innerHTML = items.map(function(item) {
       var qty      = item.qty || 1;
       var preco    = Number(item.preco) || 0;
       var subtotal = preco * qty;
-      total     += subtotal;
-      totalQty  += qty;
+      total    += subtotal;
+      totalQty += qty;
+
       var imgHtml = item.img
-        ? '<img class="cart-item-img" src="' + item.img + '" alt="' + (item.nome || '') + '"/>'
-        : '<div class="cart-item-img" style="background:#eee"></div>';
+        ? '<img class="cart-item-img" src="' + item.img + '" alt="' + (item.nome || '') + '" loading="lazy"/>'
+        : '<div class="cart-item-img"></div>';
+
       var descHtml = item.descricao
         ? '<div class="cart-item-desc">' + item.descricao + '</div>'
         : '';
-      return '<div class="cart-item">'
+
+      return (
+        '<div class="cart-item">'
         + imgHtml
         + '<div class="cart-item-info">'
         +   '<div class="cart-item-name">' + (item.nome || 'Produto') + '</div>'
         +   descHtml
-        +   '<div class="cart-item-unit">Unit.: ' + fmt(preco) + '</div>'
-        +   '<div class="cart-item-qty">Qtd: ' + qty + '</div>'
+        +   '<div class="cart-item-unit">Unitário: ' + fmt(preco) + '</div>'
+        +   '<div class="cart-item-bottom">'
+        +     '<span class="cart-item-qty-badge">Qtd: ' + qty + '</span>'
+        +     '<span class="cart-item-subtotal">' + fmt(subtotal) + '</span>'
+        +   '</div>'
         + '</div>'
-        + '<div class="cart-item-subtotal">' + fmt(subtotal) + '</div>'
-        + '</div>';
+        + '</div>'
+      );
     }).join('');
 
     if (footer) footer.style.display = 'block';
     if (totalEl) totalEl.textContent = fmt(total);
-    if (countEl) countEl.textContent = '(' + totalQty + ' ' + (totalQty === 1 ? 'item' : 'itens') + ')';
+    if (countEl) countEl.textContent = totalQty + (totalQty === 1 ? ' item' : ' itens');
   }
 
   function openCart() {
