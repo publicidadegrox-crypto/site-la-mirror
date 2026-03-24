@@ -313,14 +313,14 @@ fadeEls.forEach(el => {
 
   function openCart() {
     updateDrawer();
-    cartDrawer.classList.add('open');
-    if (cartOverlay) cartOverlay.classList.add('open');
+    cartDrawer.style.right = '0';
+    if (cartOverlay) { cartOverlay.style.opacity = '1'; cartOverlay.style.visibility = 'visible'; }
     document.body.style.overflow = 'hidden';
   }
 
   function closeCart() {
-    cartDrawer.classList.remove('open');
-    if (cartOverlay) cartOverlay.classList.remove('open');
+    cartDrawer.style.right = '-480px';
+    if (cartOverlay) { cartOverlay.style.opacity = '0'; cartOverlay.style.visibility = 'hidden'; }
     document.body.style.overflow = '';
   }
 
