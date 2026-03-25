@@ -2,6 +2,14 @@
    LA MIRROR — script.js
 ════════════════════════════════ */
 
+/* ── Email anti-obfuscação ── */
+(function() {
+  document.querySelectorAll('[data-em-u][data-em-d]').forEach(function(el) {
+    var email = el.getAttribute('data-em-u') + '\u0040' + el.getAttribute('data-em-d');
+    el.innerHTML = '<a href="mai' + 'lto:' + email + '" style="color:inherit;text-decoration:none">' + email + '</a>';
+  });
+})();
+
 /* ── Mobile menu ── */
 const burger     = document.getElementById('burger');
 const mobileMenu = document.getElementById('mobileMenu');
