@@ -5,7 +5,7 @@ header('Access-Control-Allow-Origin: *');
 $host   = 'localhost';
 $db     = 'u407899786_formulario';
 $user   = 'u407899786_formuser';
-$pass   = 'HstgForm2026A';
+$pass   = 'Marketinglamirror25#';
 
 $nome      = trim($_POST['nome']      ?? '');
 $telefone  = trim($_POST['telefone']  ?? '');
