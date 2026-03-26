@@ -1,0 +1,42 @@
+# ── Compressão Gzip ──────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE text/xml text/plain image/svg+xml
+  AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# ── Cache do navegador ───────────────────────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg        "access plus 30 days"
+  ExpiresByType image/jpeg       "access plus 30 days"
+  ExpiresByType image/png        "access plus 30 days"
+  ExpiresByType image/webp       "access plus 30 days"
+  ExpiresByType image/svg+xml    "access plus 30 days"
+  ExpiresByType text/css         "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType text/javascript  "access plus 7 days"
+  ExpiresByType text/html        "access plus 1 hour"
+</IfModule>
+
+# ── Keep-Alive ───────────────────────────────────────────
+<IfModule mod_headers.c>
+  Header set Connection keep-alive
+</IfModule>
+
+# ── Remove ETags desnecessários ──────────────────────────
+FileETag None
+
+# ── Segurança básica ─────────────────────────────────────
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# ── Redireciona www para sem www ─────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.lamirror\.com\.br [NC]
+  RewriteRule ^(.*)$ https://lamirror.com.br/$1 [R=301,L]
+</IfModule>
