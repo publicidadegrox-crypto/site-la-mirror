@@ -40,3 +40,15 @@ FileETag None
   RewriteCond %{HTTP_HOST} ^www\.lamirror\.com\.br [NC]
   RewriteRule ^(.*)$ https://lamirror.com.br/$1 [R=301,L]
 </IfModule>
+
+# ── Remove .html das URLs ────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Se o arquivo existe com .html, redireciona para URL sem .html
+  RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+  RewriteRule ^ /%1 [R=301,L]
+  # Serve o arquivo .html quando a URL não tem extensão
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+?)/?$ /$1.html [L]
+</IfModule>
