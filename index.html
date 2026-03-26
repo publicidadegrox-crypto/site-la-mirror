@@ -504,18 +504,18 @@
       <div class="contato-wrap">
         <form class="contato-form" id="contatoForm">
           <div class="form-row">
-            <input type="text" placeholder="Seu nome completo" required/>
-            <input type="tel" placeholder="WhatsApp / Telefone"/>
+            <input type="text" name="nome" placeholder="Seu nome completo" required/>
+            <input type="tel" name="telefone" placeholder="WhatsApp / Telefone"/>
           </div>
-          <input type="email" placeholder="Seu e-mail" required/>
-          <select>
+          <input type="email" name="email" placeholder="Seu e-mail" required/>
+          <select name="interesse">
             <option value="" disabled selected>Tipo de interesse</option>
             <option>Espelhos com LED</option>
             <option>Espelhos Bisotados</option>
             <option>Espelhos Decorativos</option>
             <option>Projeto Sob Medida</option>
           </select>
-          <textarea placeholder="Descreva seu projeto ou d&uacute;vida..." rows="4"></textarea>
+          <textarea name="mensagem" placeholder="Descreva seu projeto ou d&uacute;vida..." rows="4"></textarea>
           <button type="submit" class="btn-dark btn-full">Enviar Mensagem</button>
           <p class="form-ok" id="formMsg"></p>
         </form>

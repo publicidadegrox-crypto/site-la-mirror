@@ -44,13 +44,25 @@ form.addEventListener('submit', e => {
   btn.textContent = 'Enviando...';
   btn.disabled = true;
 
-  setTimeout(() => {
-    formMsg.textContent = '✓ Mensagem enviada! Entraremos em contato em breve.';
-    form.reset();
-    btn.textContent = 'Enviar Mensagem';
-    btn.disabled = false;
-    setTimeout(() => { formMsg.textContent = ''; }, 5000);
-  }, 1200);
+  const data = new FormData(form);
+
+  fetch('contato.php', { method: 'POST', body: data })
+    .then(r => r.json())
+    .then(res => {
+      formMsg.style.color = res.ok ? '#4caf50' : '#e53935';
+      formMsg.textContent = res.ok ? '✓ Mensagem enviada! Entraremos em contato em breve.' : res.msg;
+      if (res.ok) form.reset();
+      btn.textContent = 'Enviar Mensagem';
+      btn.disabled = false;
+      setTimeout(() => { formMsg.textContent = ''; }, 5000);
+    })
+    .catch(() => {
+      formMsg.style.color = '#e53935';
+      formMsg.textContent = 'Erro ao enviar. Tente novamente.';
+      btn.textContent = 'Enviar Mensagem';
+      btn.disabled = false;
+    });
+
 });
 
 /* ── Fade in ao scroll (Intersection Observer) ── */
