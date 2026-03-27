@@ -35,35 +35,37 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 /* ── Formulário ── */
-const form    = document.getElementById('contatoForm');
-const formMsg = document.getElementById('formMsg');
+(function() {
+  var form    = document.getElementById('contatoForm');
+  var formMsg = document.getElementById('formMsg');
+  if (!form) return;
 
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  const btn = form.querySelector('button[type="submit"]');
-  btn.textContent = 'Enviando...';
-  btn.disabled = true;
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
 
-  const data = new FormData(form);
+    var data = new FormData(form);
 
-  fetch('contato.php', { method: 'POST', body: data })
-    .then(r => r.json())
-    .then(res => {
-      formMsg.style.color = res.ok ? '#4caf50' : '#e53935';
-      formMsg.textContent = res.ok ? '✓ Mensagem enviada! Entraremos em contato em breve.' : res.msg;
-      if (res.ok) form.reset();
-      btn.textContent = 'Enviar Mensagem';
-      btn.disabled = false;
-      setTimeout(() => { formMsg.textContent = ''; }, 5000);
-    })
-    .catch(() => {
-      formMsg.style.color = '#e53935';
-      formMsg.textContent = 'Erro ao enviar. Tente novamente.';
-      btn.textContent = 'Enviar Mensagem';
-      btn.disabled = false;
-    });
-
-});
+    fetch('contato.php', { method: 'POST', body: data })
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        formMsg.style.color = res.ok ? '#4caf50' : '#e53935';
+        formMsg.textContent = res.ok ? '✓ Mensagem enviada! Entraremos em contato em breve.' : res.msg;
+        if (res.ok) form.reset();
+        btn.textContent = 'Enviar Mensagem';
+        btn.disabled = false;
+        setTimeout(function() { formMsg.textContent = ''; }, 5000);
+      })
+      .catch(function() {
+        formMsg.style.color = '#e53935';
+        formMsg.textContent = 'Erro ao enviar. Tente novamente.';
+        btn.textContent = 'Enviar Mensagem';
+        btn.disabled = false;
+      });
+  });
+})();
 
 /* ── Fade in ao scroll (Intersection Observer) ── */
 const fadeEls = document.querySelectorAll(
